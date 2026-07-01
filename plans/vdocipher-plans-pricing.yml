@@ -1,0 +1,155 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: VdoCipher
+providerId: vdocipher
+created: '2026-07-01'
+modified: '2026-07-01'
+reconciled: false
+tags:
+- Video
+- Secure Video Hosting
+- DRM
+- Streaming
+- Plans
+description: >-
+  VdoCipher sells prepaid annual bandwidth-and-storage bundles rather than
+  per-API-call pricing. Every new account gets a 30-day free trial with 5 GB of
+  bandwidth and up to 4 video uploads. Paid plans (e.g. a Starter tier at
+  roughly $149/year with ~1,000 GB bandwidth and ~100 GB storage) bundle a year
+  of bandwidth credit and storage; the plan ends when the bandwidth credit is
+  consumed or one year elapses, whichever comes first. There are no monthly
+  limits. Overage is prepaid per GB, with unit prices decreasing for larger
+  bundles. The server API (upload, videos, folders, OTP, watermark) is included
+  with any plan and is not metered per request.
+notes: >-
+  Representative figures from the public VdoCipher pricing page; exact bundle
+  sizes, prices, and overage rates change and vary by region and plan. Verify on
+  the pricing page during reconciliation.
+sources:
+- https://www.vdocipher.com/site/pricing/
+- https://www.vdocipher.com/blog/vdocipher-price-estimate/
+- https://www.vdocipher.com/pricing/livestream/
+plans:
+- id: vdocipher-free-trial
+  name: Free Trial
+  type: trial
+  description: >-
+    30-day trial with 5 GB of bandwidth and up to 4 video uploads; full API
+    access to evaluate secure hosting and DRM playback.
+  entries:
+  - label: Trial Bandwidth
+    name: trial_bandwidth
+    type: usage
+    metric: gigabytes
+    limit: 5
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: free
+    userMultiplied: false
+  - label: Trial Uploads
+    name: trial_uploads
+    type: quota
+    metric: videos
+    limit: 4
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: free
+    userMultiplied: false
+  elements:
+  - name: Videos API
+  - name: Upload API
+  - name: OTP & Playback
+  - name: Folders
+  - name: Watermark
+- id: vdocipher-annual-bundle
+  name: Annual Bandwidth & Storage Bundle
+  type: subscription
+  description: >-
+    Prepaid annual plan bundling bandwidth credit and storage with a one-year
+    validity; ends when the bandwidth credit is consumed or one year elapses.
+    Representative Starter figures shown.
+  entries:
+  - label: Included Bandwidth
+    name: bundle_bandwidth
+    type: quota
+    metric: gigabytes
+    limit: 1000
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: from ~$149/year (Starter)
+    userMultiplied: false
+  - label: Included Storage
+    name: bundle_storage
+    type: quota
+    metric: gigabytes
+    limit: 100
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: included in plan
+    userMultiplied: false
+  elements:
+  - name: Videos API
+  - name: Upload API
+  - name: OTP & Playback
+  - name: Folders
+  - name: Watermark
+  - name: Meta & Files
+- id: vdocipher-overage
+  name: Prepaid Overage
+  type: usage
+  description: >-
+    Prepaid per-GB overage for bandwidth and storage beyond the bundle; unit
+    prices decrease for larger bulk purchases.
+  entries:
+  - label: Bandwidth Overage
+    name: overage_bandwidth
+    type: usage
+    metric: gigabytes
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: ~$0.09-$0.25 per GB (lower for bulk)
+    userMultiplied: false
+  - label: Storage Overage
+    name: overage_storage
+    type: usage
+    metric: gigabytes
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: ~$0.7 per GB
+    userMultiplied: false
+  elements:
+  - name: Bandwidth
+  - name: Storage
+- id: vdocipher-enterprise
+  name: Enterprise
+  type: enterprise
+  description: >-
+    High-volume, live-streaming, and custom deployments with negotiated
+    bandwidth/storage, SLAs, and dedicated support. Contact VdoCipher sales.
+  entries:
+  - label: Enterprise Agreement
+    name: enterprise
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  elements:
+  - name: Custom Volume Pricing
+  - name: Live Streaming
+  - name: Dedicated Support
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

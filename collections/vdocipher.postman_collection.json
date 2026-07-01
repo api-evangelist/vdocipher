@@ -1,0 +1,475 @@
+{
+  "item": [
+    {
+      "id": "f1a2b3c4-0001-4a00-9000-000000000001",
+      "name": "Videos",
+      "description": {
+        "content": "List, retrieve, edit, and delete videos.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f1a2b3c4-0002-4a00-9000-000000000002",
+          "name": "List videos",
+          "request": {
+            "name": "List videos",
+            "description": {
+              "content": "Returns a paginated list of videos, newest first. Supports folder, query, and tag filtering.",
+              "type": "text/plain"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/videos?page=1&limit=20",
+              "path": ["api", "videos"],
+              "host": ["{{baseUrl}}"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "20" },
+                { "key": "q", "value": "", "disabled": true },
+                { "key": "folderId", "value": "", "disabled": true },
+                { "key": "tags", "value": "", "disabled": true }
+              ],
+              "variable": []
+            },
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [],
+          "event": []
+        },
+        {
+          "id": "f1a2b3c4-0003-4a00-9000-000000000003",
+          "name": "Get video status / details",
+          "request": {
+            "name": "Get video status / details",
+            "description": {
+              "content": "Returns the current status and details of a single video.",
+              "type": "text/plain"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/videos/:videoId",
+              "path": ["api", "videos", ":videoId"],
+              "host": ["{{baseUrl}}"],
+              "query": [],
+              "variable": [
+                { "key": "videoId", "value": "", "description": "The video ID." }
+              ]
+            },
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [],
+          "event": []
+        },
+        {
+          "id": "f1a2b3c4-0004-4a00-9000-000000000004",
+          "name": "Edit video metadata",
+          "request": {
+            "name": "Edit video metadata",
+            "description": {
+              "content": "Updates editable metadata such as title, description, or tags.",
+              "type": "text/plain"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/videos/:videoId",
+              "path": ["api", "videos", ":videoId"],
+              "host": ["{{baseUrl}}"],
+              "query": [],
+              "variable": [
+                { "key": "videoId", "value": "", "description": "The video ID." }
+              ]
+            },
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"<string>\",\n  \"description\": \"<string>\",\n  \"tags\": []\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          },
+          "response": [],
+          "event": []
+        },
+        {
+          "id": "f1a2b3c4-0005-4a00-9000-000000000005",
+          "name": "Delete video(s)",
+          "request": {
+            "name": "Delete video(s)",
+            "description": {
+              "content": "Deletes one or more videos identified by comma-separated IDs.",
+              "type": "text/plain"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/videos/:videoId",
+              "path": ["api", "videos", ":videoId"],
+              "host": ["{{baseUrl}}"],
+              "query": [],
+              "variable": [
+                { "key": "videoId", "value": "", "description": "Comma-separated video IDs to delete." }
+              ]
+            },
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [],
+          "event": []
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "f1a2b3c4-0010-4a00-9000-000000000010",
+      "name": "Upload",
+      "description": {
+        "content": "Obtain upload credentials for a new video.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f1a2b3c4-0011-4a00-9000-000000000011",
+          "name": "Obtain upload credentials",
+          "request": {
+            "name": "Obtain upload credentials",
+            "description": {
+              "content": "Reserves a new videoId and returns AWS S3 upload credentials (clientPayload).",
+              "type": "text/plain"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/videos?title=videotitle&folderId=root",
+              "path": ["api", "videos"],
+              "host": ["{{baseUrl}}"],
+              "query": [
+                { "key": "title", "value": "videotitle", "description": "Title for the new video." },
+                { "key": "folderId", "value": "root", "description": "Folder to place the video in." }
+              ],
+              "variable": []
+            },
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "method": "PUT",
+            "auth": null
+          },
+          "response": [],
+          "event": []
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "f1a2b3c4-0020-4a00-9000-000000000020",
+      "name": "Playback",
+      "description": {
+        "content": "Generate OTP and playbackInfo for authorized playback.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f1a2b3c4-0021-4a00-9000-000000000021",
+          "name": "Generate OTP and playbackInfo",
+          "request": {
+            "name": "Generate OTP and playbackInfo",
+            "description": {
+              "content": "Generates a one-time otp / playbackInfo pair for a single DRM-protected playback session. Call from a trusted back end only.",
+              "type": "text/plain"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/videos/:videoId/otp",
+              "path": ["api", "videos", ":videoId", "otp"],
+              "host": ["{{baseUrl}}"],
+              "query": [],
+              "variable": [
+                { "key": "videoId", "value": "", "description": "The video ID." }
+              ]
+            },
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ttl\": 300\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          },
+          "response": [],
+          "event": []
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "f1a2b3c4-0030-4a00-9000-000000000030",
+      "name": "Watermark",
+      "description": {
+        "content": "Dynamic per-viewer watermark via the OTP annotate parameter.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f1a2b3c4-0031-4a00-9000-000000000031",
+          "name": "Generate OTP with dynamic watermark annotation",
+          "request": {
+            "name": "Generate OTP with dynamic watermark annotation",
+            "description": {
+              "content": "Attaches a dynamic per-viewer watermark (text/RTMP/image) to a playback session via the annotate parameter of the OTP request.",
+              "type": "text/plain"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/videos/:videoId/otp",
+              "path": ["api", "videos", ":videoId", "otp"],
+              "host": ["{{baseUrl}}"],
+              "query": [],
+              "variable": [
+                { "key": "videoId", "value": "", "description": "The video ID." }
+              ]
+            },
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ttl\": 300,\n  \"annotate\": \"[{\\\"type\\\":\\\"rtmp\\\",\\\"text\\\":\\\"viewer@example.com\\\",\\\"alpha\\\":\\\"0.60\\\",\\\"color\\\":\\\"0xFFFFFF\\\",\\\"size\\\":\\\"15\\\",\\\"interval\\\":\\\"5000\\\"}]\"\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          },
+          "response": [],
+          "event": []
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "f1a2b3c4-0040-4a00-9000-000000000040",
+      "name": "Folders",
+      "description": {
+        "content": "Create, list, and search folders.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f1a2b3c4-0041-4a00-9000-000000000041",
+          "name": "List sub-folders",
+          "request": {
+            "name": "List sub-folders",
+            "description": {
+              "content": "Lists sub-folders under a given parent folder.",
+              "type": "text/plain"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/videos/folders?parent=root",
+              "path": ["api", "videos", "folders"],
+              "host": ["{{baseUrl}}"],
+              "query": [
+                { "key": "parent", "value": "root", "description": "Parent folder ID." }
+              ],
+              "variable": []
+            },
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [],
+          "event": []
+        },
+        {
+          "id": "f1a2b3c4-0042-4a00-9000-000000000042",
+          "name": "Create folder",
+          "request": {
+            "name": "Create folder",
+            "description": {
+              "content": "Creates a new folder under a parent folder.",
+              "type": "text/plain"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/videos/folders",
+              "path": ["api", "videos", "folders"],
+              "host": ["{{baseUrl}}"],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Course Modules\",\n  \"parent\": \"root\"\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          },
+          "response": [],
+          "event": []
+        },
+        {
+          "id": "f1a2b3c4-0043-4a00-9000-000000000043",
+          "name": "Search folders by name",
+          "request": {
+            "name": "Search folders by name",
+            "description": {
+              "content": "Searches for a folder by name and returns the id and path of matching folders.",
+              "type": "text/plain"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/videos/folders/search",
+              "path": ["api", "videos", "folders", "search"],
+              "host": ["{{baseUrl}}"],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Course Modules\"\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          },
+          "response": [],
+          "event": []
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "f1a2b3c4-0050-4a00-9000-000000000050",
+      "name": "Meta & Files",
+      "description": {
+        "content": "Video metadata, files, posters, and tags.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f1a2b3c4-0051-4a00-9000-000000000051",
+          "name": "Get video meta",
+          "request": {
+            "name": "Get video meta",
+            "description": {
+              "content": "Returns detailed metadata for a video, including poster image download URLs.",
+              "type": "text/plain"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/meta/:videoId",
+              "path": ["api", "meta", ":videoId"],
+              "host": ["{{baseUrl}}"],
+              "query": [],
+              "variable": [
+                { "key": "videoId", "value": "", "description": "The video ID." }
+              ]
+            },
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [],
+          "event": []
+        },
+        {
+          "id": "f1a2b3c4-0052-4a00-9000-000000000052",
+          "name": "List files of a video",
+          "request": {
+            "name": "List files of a video",
+            "description": {
+              "content": "Lists all files of a video, including posters, captions, and rendition assets.",
+              "type": "text/plain"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/videos/:videoId/files",
+              "path": ["api", "videos", ":videoId", "files"],
+              "host": ["{{baseUrl}}"],
+              "query": [],
+              "variable": [
+                { "key": "videoId", "value": "", "description": "The video ID." }
+              ]
+            },
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [],
+          "event": []
+        },
+        {
+          "id": "f1a2b3c4-0053-4a00-9000-000000000053",
+          "name": "List tags",
+          "request": {
+            "name": "List tags",
+            "description": {
+              "content": "Returns all tags applied across the account's videos.",
+              "type": "text/plain"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/videos/tags",
+              "path": ["api", "videos", "tags"],
+              "host": ["{{baseUrl}}"],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [],
+          "event": []
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://dev.vdocipher.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      { "key": "key", "value": "Authorization" },
+      { "key": "value", "value": "Apisecret {{apiSecret}}" },
+      { "key": "in", "value": "header" }
+    ]
+  },
+  "info": {
+    "_postman_id": "b7e4c9a1-2d3f-4e5a-8b6c-9f0a1b2c3d4e",
+    "name": "VdoCipher Server API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Specification of the VdoCipher server API (secure video hosting, DRM, upload, folders, OTP/playback, watermark). Authenticated with an `Authorization: Apisecret <API_SECRET>` header.\n\nContact Support:\n Name: VdoCipher Support\n Email: support@vdocipher.com",
+      "type": "text/plain"
+    }
+  }
+}

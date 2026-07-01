@@ -1,0 +1,264 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "VdoCipher Server API",
+    "version": "v3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "Apisecret {{apiSecret}}",
+      "in": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Videos",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List videos (paginated, filter by folder/query/tag).",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.vdocipher.com/api/videos?page=1&limit=20",
+            "params": [
+              { "name": "page", "value": "1", "type": "query" },
+              { "name": "limit", "value": "20", "type": "query" },
+              { "name": "q", "value": "", "type": "query", "description": "Search video ID and title." },
+              { "name": "folderId", "value": "", "type": "query", "description": "Restrict to a folder." },
+              { "name": "tags", "value": "", "type": "query", "description": "Filter by tag." }
+            ]
+          },
+          "docs": "Returns a paginated list of videos, newest first."
+        },
+        {
+          "info": {
+            "name": "Get video status / details.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.vdocipher.com/api/videos/:videoId",
+            "params": [
+              { "name": "videoId", "value": "", "type": "path", "description": "The video ID." }
+            ]
+          },
+          "docs": "Returns the current status and details of a single video."
+        },
+        {
+          "info": {
+            "name": "Edit video metadata.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dev.vdocipher.com/api/videos/:videoId",
+            "params": [
+              { "name": "videoId", "value": "", "type": "path", "description": "The video ID." }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{\n  \"title\": \"\",\n  \"description\": \"\",\n  \"tags\": []\n}"
+            }
+          },
+          "docs": "Updates editable metadata such as title, description, or tags."
+        },
+        {
+          "info": {
+            "name": "Delete video(s).",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://dev.vdocipher.com/api/videos/:videoId",
+            "params": [
+              { "name": "videoId", "value": "", "type": "path", "description": "Comma-separated video IDs to delete." }
+            ]
+          },
+          "docs": "Deletes one or more videos identified by comma-separated IDs."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Upload",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Obtain upload credentials.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://dev.vdocipher.com/api/videos?title=videotitle&folderId=root",
+            "params": [
+              { "name": "title", "value": "videotitle", "type": "query", "description": "Title for the new video." },
+              { "name": "folderId", "value": "root", "type": "query", "description": "Folder to place the video in." }
+            ]
+          },
+          "docs": "Reserves a new videoId and returns AWS S3 upload credentials (clientPayload)."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Playback",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Generate OTP and playbackInfo.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dev.vdocipher.com/api/videos/:videoId/otp",
+            "params": [
+              { "name": "videoId", "value": "", "type": "path", "description": "The video ID." }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{\n  \"ttl\": 300\n}"
+            }
+          },
+          "docs": "Generates a one-time otp / playbackInfo pair for a single DRM-protected playback session."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Watermark",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Generate OTP with dynamic watermark annotation.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dev.vdocipher.com/api/videos/:videoId/otp",
+            "params": [
+              { "name": "videoId", "value": "", "type": "path", "description": "The video ID." }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{\n  \"ttl\": 300,\n  \"annotate\": \"[{\\\"type\\\":\\\"rtmp\\\",\\\"text\\\":\\\"viewer@example.com\\\",\\\"alpha\\\":\\\"0.60\\\",\\\"color\\\":\\\"0xFFFFFF\\\",\\\"size\\\":\\\"15\\\",\\\"interval\\\":\\\"5000\\\"}]\"\n}"
+            }
+          },
+          "docs": "Attaches a dynamic per-viewer watermark to a playback session via the annotate parameter of the OTP request."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Folders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List sub-folders.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.vdocipher.com/api/videos/folders?parent=root",
+            "params": [
+              { "name": "parent", "value": "root", "type": "query", "description": "Parent folder ID." }
+            ]
+          },
+          "docs": "Lists sub-folders under a given parent folder."
+        },
+        {
+          "info": {
+            "name": "Create folder.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dev.vdocipher.com/api/videos/folders",
+            "body": {
+              "type": "json",
+              "data": "{\n  \"name\": \"Course Modules\",\n  \"parent\": \"root\"\n}"
+            }
+          },
+          "docs": "Creates a new folder under a parent folder."
+        },
+        {
+          "info": {
+            "name": "Search folders by name.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dev.vdocipher.com/api/videos/folders/search",
+            "body": {
+              "type": "json",
+              "data": "{\n  \"name\": \"Course Modules\"\n}"
+            }
+          },
+          "docs": "Searches for a folder by name and returns the id and path of matching folders."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Meta & Files",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get video meta.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.vdocipher.com/api/meta/:videoId",
+            "params": [
+              { "name": "videoId", "value": "", "type": "path", "description": "The video ID." }
+            ]
+          },
+          "docs": "Returns detailed metadata for a video, including poster image download URLs."
+        },
+        {
+          "info": {
+            "name": "List files of a video.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.vdocipher.com/api/videos/:videoId/files",
+            "params": [
+              { "name": "videoId", "value": "", "type": "path", "description": "The video ID." }
+            ]
+          },
+          "docs": "Lists all files of a video, including posters, captions, and rendition assets."
+        },
+        {
+          "info": {
+            "name": "List tags.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.vdocipher.com/api/videos/tags"
+          },
+          "docs": "Returns all tags applied across the account's videos."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

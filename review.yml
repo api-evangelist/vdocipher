@@ -1,0 +1,83 @@
+aid: vdocipher
+name: VdoCipher
+review:
+  question: Does VdoCipher expose a documented public WebSocket API?
+  answer: false
+  date: '2026-07-01'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    No AsyncAPI document was created. VdoCipher's server API is a plain
+    request/response REST API over HTTPS with no documented streaming,
+    Server-Sent Events, or WebSocket surface. Video delivery to the player
+    uses DRM-encrypted HTTP adaptive streaming (Widevine/FairPlay), which is
+    media transport, not an application-level event API, and is therefore out
+    of AsyncAPI scope.
+findings:
+  summary: |
+    VdoCipher does not publish a documented public WebSocket API. The
+    server-side REST API is served under https://dev.vdocipher.com/api and is
+    authenticated with an `Authorization: Apisecret <API_SECRET>` header. All
+    documented operations - upload credentials, video listing/meta/files,
+    folders, tags, and OTP/playbackInfo generation - are synchronous HTTPS
+    request/response calls. Secure playback is delivered as DRM-encrypted HTTP
+    adaptive streaming to the VdoCipher player using a server-generated
+    otp/playbackInfo pair; there is no ws:// or wss:// endpoint documented for
+    the API. Upload completion is discovered by polling the video status
+    endpoint, not via push/webhook or socket.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://dev.vdocipher.com/api
+      documented: true
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented in the VdoCipher server API reference.
+    - protocol: SSE
+      scheme: https
+      documented: false
+      note: No Server-Sent Events streaming endpoint is documented for the API.
+  endpointsConfirmedRest:
+    - GET  https://dev.vdocipher.com/api/videos
+    - PUT  https://dev.vdocipher.com/api/videos
+    - GET  https://dev.vdocipher.com/api/videos/{videoId}
+    - POST https://dev.vdocipher.com/api/videos/{videoId}/otp
+    - GET  https://dev.vdocipher.com/api/videos/{videoId}/files
+    - GET  https://dev.vdocipher.com/api/meta/{videoId}
+    - GET  https://dev.vdocipher.com/api/videos/tags
+    - GET  https://dev.vdocipher.com/api/videos/folders
+    - POST https://dev.vdocipher.com/api/videos/folders
+    - POST https://dev.vdocipher.com/api/videos/folders/search
+  authentication:
+    scheme: Apisecret
+    header: 'Authorization: Apisecret <API_SECRET>'
+    note: API secret is issued from the VdoCipher dashboard Config tab; all server API calls require it.
+sources:
+  - url: https://www.vdocipher.com/docs/server/
+    type: APIReference
+    note: Overview of the server REST API; base URL https://dev.vdocipher.com/api. No WebSocket mentioned.
+  - url: https://www.vdocipher.com/docs/server/upload/credentials/
+    type: Documentation
+    note: PUT /videos returns S3 upload credentials; synchronous REST.
+  - url: https://www.vdocipher.com/docs/server/upload/status/
+    type: Documentation
+    note: Transcoding completion is discovered by polling GET /videos/{videoId}, not push/socket.
+  - url: https://www.vdocipher.com/docs/server/playbackauth/otp/
+    type: Documentation
+    note: POST /videos/{videoId}/otp returns otp + playbackInfo over HTTPS; no socket transport.
+  - url: https://www.vdocipher.com/docs/server/videomanagement/listing/
+    type: Documentation
+    note: GET /videos listing is paginated REST.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket or SSE protocol surface exists in the documented VdoCipher
+    server API, so no AsyncAPI document was authored. The apis.yml catalog
+    models the REST surfaces (Videos, Upload, OTP/Playback, Folders,
+    Watermark, Meta & Files) with an OpenAPI specification and Postman /
+    Open Collection artifacts.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

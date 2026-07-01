@@ -1,0 +1,102 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: VdoCipher
+providerId: vdocipher
+created: '2026-07-01'
+modified: '2026-07-01'
+reconciled: false
+tags:
+- Video
+- Secure Video Hosting
+- DRM
+- Streaming
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of VdoCipher spend. VdoCipher bills prepaid annual bundles of
+  bandwidth and storage with a one-year validity, plus prepaid per-GB overage
+  for bandwidth and storage. The main cost drivers are viewer bandwidth
+  (streaming delivery) and stored video volume; the server API itself (upload,
+  videos, folders, OTP, watermark) is not metered per request. Cost control is
+  primarily about right-sizing the bundle, monitoring bandwidth burn, and
+  purchasing overage in bulk for lower unit rates.
+notes: >-
+  Bundle sizes, prices, and overage rates change and vary by plan and region;
+  verify against the VdoCipher pricing page during reconciliation.
+sources:
+- https://www.vdocipher.com/site/pricing/
+- https://www.vdocipher.com/blog/vdocipher-price-estimate/
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: VdoCipher
+serviceCategory: Media and Content Delivery
+billingModel:
+  pricingCategory: Prepaid Subscription with Usage Overage
+  billingFrequency: Annual
+  billingCurrency: USD
+  chargeCategories:
+  - Purchase
+  - Usage
+  - Adjustment
+focusColumns:
+  ServiceName: VdoCipher Secure Video Hosting
+  ServiceCategory: Media and Content Delivery
+  ProviderName: VdoCipher
+  PublisherName: VdoCipher
+  InvoiceIssuerName: VdoCipher
+  BillingCurrency: USD
+  ChargeCategory: Usage
+  PricingCategory: Prepaid Subscription with Usage Overage
+meters:
+- name: bandwidth_gb
+  description: Gigabytes of video streaming/delivery bandwidth consumed against the plan bundle.
+  unit: gigabytes
+  aggregation: sum
+  dimensions:
+  - account
+  - video
+- name: storage_gb
+  description: Gigabytes of transcoded video stored against the plan's storage allowance.
+  unit: gigabytes
+  aggregation: max
+  dimensions:
+  - account
+  - folder
+- name: bandwidth_overage_gb
+  description: Prepaid per-GB bandwidth beyond the bundle; unit price decreases with bulk purchase.
+  unit: gigabytes
+  aggregation: sum
+  dimensions:
+  - account
+- name: storage_overage_gb
+  description: Prepaid per-GB storage beyond the bundle allowance.
+  unit: gigabytes
+  aggregation: sum
+  dimensions:
+  - account
+- name: videos_stored
+  description: Count of videos stored in the account (drives storage consumption).
+  unit: videos
+  aggregation: max
+  dimensions:
+  - account
+  - folder
+principles:
+- name: Visibility
+  description: Track bandwidth burn and storage in the dashboard; watch remaining credit and plan expiry.
+- name: Allocation
+  description: Organize videos into folders and tags to attribute bandwidth/storage to courses, teams, or tenants.
+- name: Optimization
+  description: Right-size the annual bundle to expected views; buy overage in bulk for lower per-GB rates; prune stale videos to reclaim storage.
+- name: Accountability
+  description: Assign an owner to monitor credit depletion and renew before expiry to avoid playback interruption.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

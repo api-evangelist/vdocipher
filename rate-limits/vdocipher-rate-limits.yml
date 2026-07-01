@@ -1,0 +1,67 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: VdoCipher
+providerId: vdocipher
+created: '2026-07-01'
+modified: '2026-07-01'
+reconciled: false
+tags:
+- Video
+- Secure Video Hosting
+- DRM
+- Streaming
+- Rate Limiting
+- Quotas
+- Throttling
+description: >-
+  VdoCipher's primary consumption controls are the prepaid annual bandwidth and
+  storage bundles rather than per-second request throttles; usage is capped when
+  the bandwidth credit is exhausted or the one-year validity ends. The server
+  API (upload credentials, videos, folders, OTP, watermark) does not publish
+  explicit per-account requests-per-second limits in the public documentation.
+  Standard fair-use throttling and abuse protection apply, and clients should
+  implement retry-with-backoff on transient errors. OTP generation is expected
+  to be performed server-side per playback session.
+notes: >-
+  No explicit numeric RPS/RPM rate limits are documented publicly for the
+  VdoCipher server API. The effective ceiling is bandwidth/storage credit and
+  plan validity. Confirm any hard request limits with VdoCipher support during
+  reconciliation.
+sources:
+- https://www.vdocipher.com/docs/server/
+- https://www.vdocipher.com/docs/server/playbackauth/otp/
+- https://www.vdocipher.com/site/pricing/
+responseCodes:
+  throttled: 429
+limits:
+- name: Bandwidth Credit
+  scope: account
+  metric: gigabytes
+  limit: per plan bundle
+  notes: Playback and delivery stop when the prepaid bandwidth credit is consumed.
+- name: Storage Quota
+  scope: account
+  metric: gigabytes
+  limit: per plan bundle
+  notes: Uploaded/transcoded video storage counts against the plan's storage allowance.
+- name: Plan Validity
+  scope: account
+  metric: days
+  limit: 365
+  notes: Plans expire one year after purchase regardless of remaining credit.
+- name: API Request Throttling
+  scope: account
+  metric: requests
+  limit: see provider documentation
+  notes: No explicit per-second/per-minute request limit is published; fair-use throttling applies.
+policies:
+- name: Prepaid Credit Ceiling
+  description: Bandwidth and storage bundles act as the effective usage ceiling; top up before exhaustion.
+- name: Server-Side OTP
+  description: OTP/playbackInfo must be generated on a trusted back end, once per authorized playback session.
+- name: Backoff Strategy
+  description: Clients should implement retry with exponential backoff and honor Retry-After on 429/5xx responses.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
