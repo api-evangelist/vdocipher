@@ -158,6 +158,10 @@ apis:
     - poster images, captions/subtitles, and rendition assets - plus list and search
     the tags applied across the library.
 common:
+- type: DomainSecurity
+  url: security/vdocipher-domain-security.yml
+- type: Authentication
+  url: authentication/vdocipher-authentication.yml
 - type: GitHubOrganization
   url: https://github.com/VdoCipher
 - type: LinkedIn
@@ -172,6 +176,8 @@ common:
   url: rate-limits/vdocipher-rate-limits.yml
 - type: FinOps
   url: finops/vdocipher-finops.yml
+- type: Blog
+  url: https://www.vdocipher.com/blog/feed/
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

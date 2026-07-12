@@ -1,0 +1,17 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/vdocipher-openapi.yml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+schemes:
+- name: Apisecret
+  type: apiKey
+  in: header
+  parameter: Authorization
+  description: 'API secret from the VdoCipher dashboard (Config tab), sent as `Authorization:
+    Apisecret <API_SECRET>`.'
+  sources:
+  - openapi/vdocipher-openapi.yml
