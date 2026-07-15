@@ -158,6 +158,8 @@ apis:
     - poster images, captions/subtitles, and rendition assets - plus list and search
     the tags applied across the library.
 common:
+- type: AgenticAccess
+  url: agentic-access/vdocipher-agentic-access.yml
 - type: DomainSecurity
   url: security/vdocipher-domain-security.yml
 - type: Authentication
