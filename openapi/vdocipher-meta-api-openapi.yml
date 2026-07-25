@@ -1,0 +1,103 @@
+openapi: 3.0.1
+info:
+  title: VdoCipher Server Folders Meta API
+  description: 'Server-side REST API for the VdoCipher secure video hosting platform. Covers video upload (credentials + status), media management (list, search, meta, files, delete), folders, tags, and OTP / playbackInfo generation for DRM-protected playback with optional dynamic watermarking. All requests are authenticated with an `Authorization: Apisecret <API_SECRET>` header. This is a faithful, representative specification authored by API Evangelist from the public VdoCipher documentation; consult the official Swagger reference for the authoritative contract.'
+  termsOfService: https://www.vdocipher.com/terms/
+  contact:
+    name: VdoCipher Support
+    url: https://www.vdocipher.com/
+    email: support@vdocipher.com
+  version: v3
+servers:
+- url: https://dev.vdocipher.com/api
+  description: VdoCipher server API base URL
+security:
+- Apisecret: []
+tags:
+- name: Meta
+  description: Video metadata, files, posters, and captions.
+paths:
+  /videos/{videoId}/files:
+    get:
+      operationId: listVideoFiles
+      tags:
+      - Meta
+      summary: List files of a video
+      description: Lists all files associated with a video, including poster images, caption/subtitle tracks, and rendition assets.
+      parameters:
+      - $ref: '#/components/parameters/VideoId'
+      responses:
+        '200':
+          description: A list of files for the video.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VideoFile'
+  /meta/{videoId}:
+    get:
+      operationId: getVideoMeta
+      tags:
+      - Meta
+      summary: Get video meta
+      description: Returns detailed metadata for a video, including poster image download URLs, dimensions, and duration.
+      parameters:
+      - $ref: '#/components/parameters/VideoId'
+      responses:
+        '200':
+          description: Detailed video metadata.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VideoMeta'
+components:
+  schemas:
+    VideoMeta:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        length:
+          type: number
+        posters:
+          type: array
+          items:
+            type: object
+            properties:
+              url:
+                type: string
+                format: uri
+              height:
+                type: integer
+              width:
+                type: integer
+    VideoFile:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+          description: File type (e.g. poster, subtitle, video).
+        url:
+          type: string
+          format: uri
+  parameters:
+    VideoId:
+      name: videoId
+      in: path
+      required: true
+      description: The video ID (comma-separated for bulk delete).
+      schema:
+        type: string
+  securitySchemes:
+    Apisecret:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'API secret from the VdoCipher dashboard (Config tab), sent as `Authorization: Apisecret <API_SECRET>`.'

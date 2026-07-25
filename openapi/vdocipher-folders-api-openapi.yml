@@ -1,0 +1,129 @@
+openapi: 3.0.1
+info:
+  title: VdoCipher Server Folders API
+  description: 'Server-side REST API for the VdoCipher secure video hosting platform. Covers video upload (credentials + status), media management (list, search, meta, files, delete), folders, tags, and OTP / playbackInfo generation for DRM-protected playback with optional dynamic watermarking. All requests are authenticated with an `Authorization: Apisecret <API_SECRET>` header. This is a faithful, representative specification authored by API Evangelist from the public VdoCipher documentation; consult the official Swagger reference for the authoritative contract.'
+  termsOfService: https://www.vdocipher.com/terms/
+  contact:
+    name: VdoCipher Support
+    url: https://www.vdocipher.com/
+    email: support@vdocipher.com
+  version: v3
+servers:
+- url: https://dev.vdocipher.com/api
+  description: VdoCipher server API base URL
+security:
+- Apisecret: []
+tags:
+- name: Folders
+  description: Create, list, and search folders.
+paths:
+  /videos/folders:
+    get:
+      operationId: listFolders
+      tags:
+      - Folders
+      summary: List sub-folders
+      description: Lists sub-folders under a given parent folder.
+      parameters:
+      - name: parent
+        in: query
+        description: Parent folder ID. Defaults to root.
+        schema:
+          type: string
+          default: root
+      responses:
+        '200':
+          description: A list of folders.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FolderList'
+    post:
+      operationId: createFolder
+      tags:
+      - Folders
+      summary: Create folder
+      description: Creates a new folder under a parent folder.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FolderCreate'
+      responses:
+        '200':
+          description: The created folder.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Folder'
+  /videos/folders/search:
+    post:
+      operationId: searchFolders
+      tags:
+      - Folders
+      summary: Search folders by name
+      description: Searches for a folder by name and returns the id and path of matching folders.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+              required:
+              - name
+      responses:
+        '200':
+          description: Matching folders.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FolderList'
+components:
+  schemas:
+    Folder:
+      type: object
+      properties:
+        id:
+          type: string
+          example: root
+        name:
+          type: string
+        parent:
+          type: string
+        path:
+          type: string
+    FolderCreate:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          example: Course Modules
+        parent:
+          type: string
+          description: Parent folder ID. Use "root" for the top level.
+          example: root
+    FolderList:
+      type: object
+      properties:
+        folderId:
+          type: string
+        name:
+          type: string
+        parent:
+          type: string
+        folders:
+          type: array
+          items:
+            $ref: '#/components/schemas/Folder'
+  securitySchemes:
+    Apisecret:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'API secret from the VdoCipher dashboard (Config tab), sent as `Authorization: Apisecret <API_SECRET>`.'

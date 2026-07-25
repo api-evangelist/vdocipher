@@ -1,0 +1,42 @@
+openapi: 3.0.1
+info:
+  title: VdoCipher Server Folders Tags API
+  description: 'Server-side REST API for the VdoCipher secure video hosting platform. Covers video upload (credentials + status), media management (list, search, meta, files, delete), folders, tags, and OTP / playbackInfo generation for DRM-protected playback with optional dynamic watermarking. All requests are authenticated with an `Authorization: Apisecret <API_SECRET>` header. This is a faithful, representative specification authored by API Evangelist from the public VdoCipher documentation; consult the official Swagger reference for the authoritative contract.'
+  termsOfService: https://www.vdocipher.com/terms/
+  contact:
+    name: VdoCipher Support
+    url: https://www.vdocipher.com/
+    email: support@vdocipher.com
+  version: v3
+servers:
+- url: https://dev.vdocipher.com/api
+  description: VdoCipher server API base URL
+security:
+- Apisecret: []
+tags:
+- name: Tags
+  description: List and search video tags.
+paths:
+  /videos/tags:
+    get:
+      operationId: listTags
+      tags:
+      - Tags
+      summary: List tags
+      description: Returns all tags applied across the account's videos.
+      responses:
+        '200':
+          description: A list of tags.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+components:
+  securitySchemes:
+    Apisecret:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'API secret from the VdoCipher dashboard (Config tab), sent as `Authorization: Apisecret <API_SECRET>`.'

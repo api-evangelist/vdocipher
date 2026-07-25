@@ -1,0 +1,80 @@
+openapi: 3.0.1
+info:
+  title: VdoCipher Server Folders Upload API
+  description: 'Server-side REST API for the VdoCipher secure video hosting platform. Covers video upload (credentials + status), media management (list, search, meta, files, delete), folders, tags, and OTP / playbackInfo generation for DRM-protected playback with optional dynamic watermarking. All requests are authenticated with an `Authorization: Apisecret <API_SECRET>` header. This is a faithful, representative specification authored by API Evangelist from the public VdoCipher documentation; consult the official Swagger reference for the authoritative contract.'
+  termsOfService: https://www.vdocipher.com/terms/
+  contact:
+    name: VdoCipher Support
+    url: https://www.vdocipher.com/
+    email: support@vdocipher.com
+  version: v3
+servers:
+- url: https://dev.vdocipher.com/api
+  description: VdoCipher server API base URL
+security:
+- Apisecret: []
+tags:
+- name: Upload
+  description: Obtain upload credentials and check transcoding status.
+paths:
+  /videos:
+    put:
+      operationId: obtainUploadCredentials
+      tags:
+      - Upload
+      summary: Obtain upload credentials
+      description: Reserves a new videoId and returns short-lived AWS S3 credentials (clientPayload) used to upload the source file directly to storage.
+      parameters:
+      - name: title
+        in: query
+        required: true
+        description: Title for the new video.
+        schema:
+          type: string
+      - name: folderId
+        in: query
+        description: Folder to place the video in. Defaults to root.
+        schema:
+          type: string
+          default: root
+      responses:
+        '200':
+          description: Upload credentials and the reserved videoId.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadCredentials'
+components:
+  schemas:
+    UploadCredentials:
+      type: object
+      properties:
+        clientPayload:
+          type: object
+          properties:
+            policy:
+              type: string
+            key:
+              type: string
+            x-amz-signature:
+              type: string
+            x-amz-algorithm:
+              type: string
+              example: AWS4-HMAC-SHA256
+            x-amz-date:
+              type: string
+            x-amz-credential:
+              type: string
+            uploadLink:
+              type: string
+              format: uri
+              example: https://example-bucket.s3.amazonaws.com
+        videoId:
+          type: string
+          example: '1234567890'
+  securitySchemes:
+    Apisecret:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'API secret from the VdoCipher dashboard (Config tab), sent as `Authorization: Apisecret <API_SECRET>`.'

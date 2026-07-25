@@ -1,0 +1,86 @@
+openapi: 3.0.1
+info:
+  title: VdoCipher Server Folders Playback API
+  description: 'Server-side REST API for the VdoCipher secure video hosting platform. Covers video upload (credentials + status), media management (list, search, meta, files, delete), folders, tags, and OTP / playbackInfo generation for DRM-protected playback with optional dynamic watermarking. All requests are authenticated with an `Authorization: Apisecret <API_SECRET>` header. This is a faithful, representative specification authored by API Evangelist from the public VdoCipher documentation; consult the official Swagger reference for the authoritative contract.'
+  termsOfService: https://www.vdocipher.com/terms/
+  contact:
+    name: VdoCipher Support
+    url: https://www.vdocipher.com/
+    email: support@vdocipher.com
+  version: v3
+servers:
+- url: https://dev.vdocipher.com/api
+  description: VdoCipher server API base URL
+security:
+- Apisecret: []
+tags:
+- name: Playback
+  description: Generate OTP and playbackInfo for authorized playback.
+paths:
+  /videos/{videoId}/otp:
+    post:
+      operationId: generateOtp
+      tags:
+      - Playback
+      summary: Generate OTP and playbackInfo
+      description: Generates a one-time otp / playbackInfo pair authorizing a single DRM-protected playback session for the video. Optional parameters set the token TTL, a dynamic per-viewer watermark (annotate), and IP/geo or referrer restrictions. Must always be called from a trusted back end.
+      parameters:
+      - $ref: '#/components/parameters/VideoId'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OtpRequest'
+      responses:
+        '200':
+          description: An OTP and playbackInfo pair.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OtpResponse'
+components:
+  schemas:
+    OtpRequest:
+      type: object
+      properties:
+        ttl:
+          type: integer
+          description: Time-to-live of the OTP in seconds.
+          default: 300
+          example: 300
+        whitelisthref:
+          type: array
+          description: Referrer URLs allowed to play the video.
+          items:
+            type: string
+        ipbasedgeo:
+          type: object
+          description: IP/geo allow or deny rules for the session.
+        annotate:
+          type: string
+          description: JSON string describing dynamic per-viewer watermark annotations (text, RTMP, or image) burned over the DRM stream.
+          example: '[{"type":"rtmp","text":"viewer@example.com","alpha":"0.60","color":"0xFFFFFF","size":"15","interval":"5000"}]'
+    OtpResponse:
+      type: object
+      properties:
+        otp:
+          type: string
+          example: 1234567890abcdefghijk
+        playbackInfo:
+          type: string
+          example: z1y2x3w4v5u6t7s8r9q10
+  parameters:
+    VideoId:
+      name: videoId
+      in: path
+      required: true
+      description: The video ID (comma-separated for bulk delete).
+      schema:
+        type: string
+  securitySchemes:
+    Apisecret:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'API secret from the VdoCipher dashboard (Config tab), sent as `Authorization: Apisecret <API_SECRET>`.'

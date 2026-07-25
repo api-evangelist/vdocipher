@@ -1,0 +1,193 @@
+openapi: 3.0.1
+info:
+  title: VdoCipher Server Folders Videos API
+  description: 'Server-side REST API for the VdoCipher secure video hosting platform. Covers video upload (credentials + status), media management (list, search, meta, files, delete), folders, tags, and OTP / playbackInfo generation for DRM-protected playback with optional dynamic watermarking. All requests are authenticated with an `Authorization: Apisecret <API_SECRET>` header. This is a faithful, representative specification authored by API Evangelist from the public VdoCipher documentation; consult the official Swagger reference for the authoritative contract.'
+  termsOfService: https://www.vdocipher.com/terms/
+  contact:
+    name: VdoCipher Support
+    url: https://www.vdocipher.com/
+    email: support@vdocipher.com
+  version: v3
+servers:
+- url: https://dev.vdocipher.com/api
+  description: VdoCipher server API base URL
+security:
+- Apisecret: []
+tags:
+- name: Videos
+  description: List, search, retrieve, edit, and delete videos.
+paths:
+  /videos:
+    get:
+      operationId: listVideos
+      tags:
+      - Videos
+      summary: List videos
+      description: Returns a paginated list of videos, newest first (20 per page by default). Supports filtering by folder, free-text query, and tag.
+      parameters:
+      - name: page
+        in: query
+        description: Page number to retrieve.
+        schema:
+          type: integer
+          default: 1
+      - name: limit
+        in: query
+        description: Number of results per page.
+        schema:
+          type: integer
+          default: 20
+      - name: q
+        in: query
+        description: Free-text search across video ID and title.
+        schema:
+          type: string
+      - name: folderId
+        in: query
+        description: Restrict results to a single folder.
+        schema:
+          type: string
+      - name: tags
+        in: query
+        description: Filter videos by a tag.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A paginated list of videos.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VideoList'
+  /videos/{videoId}:
+    get:
+      operationId: getVideoStatus
+      tags:
+      - Videos
+      summary: Get video status / details
+      description: Returns the current status and details of a single video, including transcoding progress after an upload.
+      parameters:
+      - $ref: '#/components/parameters/VideoId'
+      responses:
+        '200':
+          description: Video details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Video'
+    post:
+      operationId: editVideoMeta
+      tags:
+      - Videos
+      summary: Edit video metadata
+      description: Update editable metadata such as title, description, or tags.
+      parameters:
+      - $ref: '#/components/parameters/VideoId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VideoMetaUpdate'
+      responses:
+        '200':
+          description: The updated video.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Video'
+    delete:
+      operationId: deleteVideos
+      tags:
+      - Videos
+      summary: Delete video(s)
+      description: Deletes one or more videos identified by comma-separated IDs.
+      parameters:
+      - $ref: '#/components/parameters/VideoId'
+      responses:
+        '200':
+          description: Deletion result.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+components:
+  schemas:
+    VideoMetaUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+    VideoList:
+      type: object
+      properties:
+        rows:
+          type: array
+          items:
+            $ref: '#/components/schemas/Video'
+        total:
+          type: integer
+        page:
+          type: integer
+        limit:
+          type: integer
+    Video:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 1234567890abcdef
+        title:
+          type: string
+          example: Introduction to Secure Video
+        description:
+          type: string
+        status:
+          type: string
+          description: Processing status of the video.
+          enum:
+          - PRE-Upload
+          - Queued
+          - Processing
+          - ready
+          - Failed
+          example: ready
+        length:
+          type: number
+          description: Duration in seconds.
+          example: 622.5
+        upload_time:
+          type: integer
+          description: Unix timestamp of upload.
+        folderId:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        poster:
+          type: string
+          format: uri
+  parameters:
+    VideoId:
+      name: videoId
+      in: path
+      required: true
+      description: The video ID (comma-separated for bulk delete).
+      schema:
+        type: string
+  securitySchemes:
+    Apisecret:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'API secret from the VdoCipher dashboard (Config tab), sent as `Authorization: Apisecret <API_SECRET>`.'
