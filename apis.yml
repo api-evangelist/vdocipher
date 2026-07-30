@@ -7,7 +7,20 @@ description: VdoCipher is a secure video hosting platform that delivers Hollywoo
   OTT businesses. Its server-side REST API handles video upload, media management,
   folders, dynamic viewer watermarking, and OTP/playbackInfo generation for authorized
   playback, all secured with an Apisecret authorization header.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: true
+  try_now: true
+  public: false
+  label: Freemium (free trial) · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/vdocipher.png
 tags:
 - Video
 - Secure Video Hosting
@@ -20,143 +33,210 @@ created: '2026-07-01'
 modified: '2026-07-01'
 specificationVersion: '0.19'
 apis:
-- aid: vdocipher:vdocipher-videos-api
-  name: VdoCipher Videos API
-  tags:
-  - Videos
-  - Media Management
-  - Listing
-  - Search
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://www.vdocipher.com/docs/server/videomanagement/listing/
-  baseURL: https://dev.vdocipher.com/api
-  properties:
-  - url: https://www.vdocipher.com/docs/server/videomanagement/listing/
-    type: Documentation
-  - url: https://www.vdocipher.com/docs/server/
-    type: APIReference
-  - url: openapi/vdocipher-openapi.yml
-    type: OpenAPI
-  - url: collections/vdocipher.postman_collection.json
-    type: PostmanCollection
-  - url: collections/vdocipher.opencollection.json
-    type: OpenCollection
-  description: List, search, retrieve, edit, and delete videos in a VdoCipher account.
-    Supports pagination, folder scoping, free-text query, and tag filtering over the
-    video library.
-- aid: vdocipher:vdocipher-upload-api
-  name: VdoCipher Upload API
-  tags:
-  - Upload
-  - Ingest
-  - Credentials
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://www.vdocipher.com/docs/server/upload/credentials/
-  baseURL: https://dev.vdocipher.com/api
-  properties:
-  - url: https://www.vdocipher.com/docs/server/upload/credentials/
-    type: Documentation
-  - url: https://www.vdocipher.com/docs/server/upload/status/
-    type: APIReference
-  - url: openapi/vdocipher-openapi.yml
-    type: OpenAPI
-  - url: collections/vdocipher.postman_collection.json
-    type: PostmanCollection
-  - url: collections/vdocipher.opencollection.json
-    type: OpenCollection
-  description: Obtain short-lived AWS S3 upload credentials (clientPayload) and a new
-    videoId, then upload a source file directly to storage and poll transcoding status
-    until the video is ready.
-- aid: vdocipher:vdocipher-playback-otp-api
-  name: VdoCipher OTP & Playback Credentials API
-  tags:
-  - OTP
-  - Playback
-  - Authentication
-  - DRM
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://www.vdocipher.com/docs/server/playbackauth/otp/
-  baseURL: https://dev.vdocipher.com/api
-  properties:
-  - url: https://www.vdocipher.com/docs/server/playbackauth/otp/
-    type: Documentation
-  - url: https://www.vdocipher.com/docs/server/playbackauth/offline/
-    type: APIReference
-  - url: openapi/vdocipher-openapi.yml
-    type: OpenAPI
-  - url: collections/vdocipher.postman_collection.json
-    type: PostmanCollection
-  - url: collections/vdocipher.opencollection.json
-    type: OpenCollection
-  description: Generate a one-time otp and playbackInfo pair on the back end for a
-    specific video so the DRM-protected player can authorize a single viewing session,
-    with optional TTL, dynamic watermark, and IP/geo restrictions.
 - aid: vdocipher:vdocipher-folders-api
   name: VdoCipher Folders API
+  description: Create, list, and search folders.
+  humanURL: https://www.vdocipher.com/docs/server/videomanagement/listing/
+  baseURL: https://dev.vdocipher.com/api
   tags:
   - Folders
-  - Organization
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://www.vdocipher.com/docs/server/videomanagement/folder-create/
-  baseURL: https://dev.vdocipher.com/api
   properties:
-  - url: https://www.vdocipher.com/docs/server/videomanagement/folder-create/
-    type: Documentation
-  - url: https://www.vdocipher.com/docs/server/videomanagement/folder-search/
-    type: APIReference
-  - url: openapi/vdocipher-openapi.yml
-    type: OpenAPI
-  - url: collections/vdocipher.postman_collection.json
-    type: PostmanCollection
-  - url: collections/vdocipher.opencollection.json
-    type: OpenCollection
-  description: Create, list sub-folders under, and search a hierarchical folder tree
-    (rooted at "root") used to organize the video library.
-- aid: vdocipher:vdocipher-watermark-api
-  name: VdoCipher Watermark API
+  - type: OpenAPI
+    url: openapi/vdocipher-folders-api-openapi.yml
+  - type: Documentation
+    url: https://www.vdocipher.com/docs/server/videomanagement/listing/
+  - type: APIReference
+    url: https://www.vdocipher.com/docs/server/
+  - type: PostmanCollection
+    url: collections/vdocipher.postman_collection.json
+  - type: OpenCollection
+    url: collections/vdocipher.opencollection.json
+  - type: Documentation
+    url: https://www.vdocipher.com/docs/server/upload/credentials/
+  - type: APIReference
+    url: https://www.vdocipher.com/docs/server/upload/status/
+  - type: Documentation
+    url: https://www.vdocipher.com/docs/server/playbackauth/otp/
+  - type: APIReference
+    url: https://www.vdocipher.com/docs/server/playbackauth/offline/
+  - type: Documentation
+    url: https://www.vdocipher.com/docs/server/videomanagement/folder-create/
+  - type: APIReference
+    url: https://www.vdocipher.com/docs/server/videomanagement/folder-search/
+  - type: Documentation
+    url: https://www.vdocipher.com/docs/server/videomanagement/files/list/
+  - type: APIReference
+    url: https://www.vdocipher.com/docs/server/videomanagement/files/posters/
+- aid: vdocipher:vdocipher-meta-api
+  name: VdoCipher Meta API
+  description: Video metadata, files, posters, and captions.
+  humanURL: https://www.vdocipher.com/docs/server/videomanagement/listing/
+  baseURL: https://dev.vdocipher.com/api
   tags:
-  - Watermark
-  - Annotation
-  - Security
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://www.vdocipher.com/docs/server/playbackauth/otp/
-  baseURL: https://dev.vdocipher.com/api
+  - Meta
   properties:
-  - url: https://www.vdocipher.com/docs/server/playbackauth/otp/
-    type: Documentation
-  - url: openapi/vdocipher-openapi.yml
-    type: OpenAPI
-  - url: collections/vdocipher.postman_collection.json
-    type: PostmanCollection
-  - url: collections/vdocipher.opencollection.json
-    type: OpenCollection
-  description: Attach a dynamic, per-viewer annotation (text, RTMP, or image watermark)
-    to a playback session via the OTP request annotate parameter, burning identifying
-    marks such as the viewer email or IP over the DRM stream.
-- aid: vdocipher:vdocipher-meta-files-api
-  name: VdoCipher Meta & Files API
+  - type: OpenAPI
+    url: openapi/vdocipher-meta-api-openapi.yml
+  - type: Documentation
+    url: https://www.vdocipher.com/docs/server/videomanagement/listing/
+  - type: APIReference
+    url: https://www.vdocipher.com/docs/server/
+  - type: PostmanCollection
+    url: collections/vdocipher.postman_collection.json
+  - type: OpenCollection
+    url: collections/vdocipher.opencollection.json
+  - type: Documentation
+    url: https://www.vdocipher.com/docs/server/upload/credentials/
+  - type: APIReference
+    url: https://www.vdocipher.com/docs/server/upload/status/
+  - type: Documentation
+    url: https://www.vdocipher.com/docs/server/playbackauth/otp/
+  - type: APIReference
+    url: https://www.vdocipher.com/docs/server/playbackauth/offline/
+  - type: Documentation
+    url: https://www.vdocipher.com/docs/server/videomanagement/folder-create/
+  - type: APIReference
+    url: https://www.vdocipher.com/docs/server/videomanagement/folder-search/
+  - type: Documentation
+    url: https://www.vdocipher.com/docs/server/videomanagement/files/list/
+  - type: APIReference
+    url: https://www.vdocipher.com/docs/server/videomanagement/files/posters/
+- aid: vdocipher:vdocipher-playback-api
+  name: VdoCipher Playback API
+  description: Generate OTP and playbackInfo for authorized playback.
+  humanURL: https://www.vdocipher.com/docs/server/videomanagement/listing/
+  baseURL: https://dev.vdocipher.com/api
   tags:
-  - Metadata
-  - Files
-  - Posters
-  - Captions
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://www.vdocipher.com/docs/server/videomanagement/files/list/
-  baseURL: https://dev.vdocipher.com/api
+  - Playback
   properties:
-  - url: https://www.vdocipher.com/docs/server/videomanagement/files/list/
-    type: Documentation
-  - url: https://www.vdocipher.com/docs/server/videomanagement/files/posters/
-    type: APIReference
-  - url: openapi/vdocipher-openapi.yml
-    type: OpenAPI
-  - url: collections/vdocipher.postman_collection.json
-    type: PostmanCollection
-  - url: collections/vdocipher.opencollection.json
-    type: OpenCollection
-  description: Retrieve detailed metadata for a video and list its associated files
-    - poster images, captions/subtitles, and rendition assets - plus list and search
-    the tags applied across the library.
+  - type: OpenAPI
+    url: openapi/vdocipher-playback-api-openapi.yml
+  - type: Documentation
+    url: https://www.vdocipher.com/docs/server/videomanagement/listing/
+  - type: APIReference
+    url: https://www.vdocipher.com/docs/server/
+  - type: PostmanCollection
+    url: collections/vdocipher.postman_collection.json
+  - type: OpenCollection
+    url: collections/vdocipher.opencollection.json
+  - type: Documentation
+    url: https://www.vdocipher.com/docs/server/upload/credentials/
+  - type: APIReference
+    url: https://www.vdocipher.com/docs/server/upload/status/
+  - type: Documentation
+    url: https://www.vdocipher.com/docs/server/playbackauth/otp/
+  - type: APIReference
+    url: https://www.vdocipher.com/docs/server/playbackauth/offline/
+  - type: Documentation
+    url: https://www.vdocipher.com/docs/server/videomanagement/folder-create/
+  - type: APIReference
+    url: https://www.vdocipher.com/docs/server/videomanagement/folder-search/
+  - type: Documentation
+    url: https://www.vdocipher.com/docs/server/videomanagement/files/list/
+  - type: APIReference
+    url: https://www.vdocipher.com/docs/server/videomanagement/files/posters/
+- aid: vdocipher:vdocipher-tags-api
+  name: VdoCipher Tags API
+  description: List and search video tags.
+  humanURL: https://www.vdocipher.com/docs/server/videomanagement/listing/
+  baseURL: https://dev.vdocipher.com/api
+  tags:
+  - Tags
+  properties:
+  - type: OpenAPI
+    url: openapi/vdocipher-tags-api-openapi.yml
+  - type: Documentation
+    url: https://www.vdocipher.com/docs/server/videomanagement/listing/
+  - type: APIReference
+    url: https://www.vdocipher.com/docs/server/
+  - type: PostmanCollection
+    url: collections/vdocipher.postman_collection.json
+  - type: OpenCollection
+    url: collections/vdocipher.opencollection.json
+  - type: Documentation
+    url: https://www.vdocipher.com/docs/server/upload/credentials/
+  - type: APIReference
+    url: https://www.vdocipher.com/docs/server/upload/status/
+  - type: Documentation
+    url: https://www.vdocipher.com/docs/server/playbackauth/otp/
+  - type: APIReference
+    url: https://www.vdocipher.com/docs/server/playbackauth/offline/
+  - type: Documentation
+    url: https://www.vdocipher.com/docs/server/videomanagement/folder-create/
+  - type: APIReference
+    url: https://www.vdocipher.com/docs/server/videomanagement/folder-search/
+  - type: Documentation
+    url: https://www.vdocipher.com/docs/server/videomanagement/files/list/
+  - type: APIReference
+    url: https://www.vdocipher.com/docs/server/videomanagement/files/posters/
+- aid: vdocipher:vdocipher-upload-api
+  name: VdoCipher Upload API
+  description: Obtain upload credentials and check transcoding status.
+  humanURL: https://www.vdocipher.com/docs/server/videomanagement/listing/
+  baseURL: https://dev.vdocipher.com/api
+  tags:
+  - Upload
+  properties:
+  - type: OpenAPI
+    url: openapi/vdocipher-upload-api-openapi.yml
+  - type: Documentation
+    url: https://www.vdocipher.com/docs/server/videomanagement/listing/
+  - type: APIReference
+    url: https://www.vdocipher.com/docs/server/
+  - type: PostmanCollection
+    url: collections/vdocipher.postman_collection.json
+  - type: OpenCollection
+    url: collections/vdocipher.opencollection.json
+  - type: Documentation
+    url: https://www.vdocipher.com/docs/server/upload/credentials/
+  - type: APIReference
+    url: https://www.vdocipher.com/docs/server/upload/status/
+  - type: Documentation
+    url: https://www.vdocipher.com/docs/server/playbackauth/otp/
+  - type: APIReference
+    url: https://www.vdocipher.com/docs/server/playbackauth/offline/
+  - type: Documentation
+    url: https://www.vdocipher.com/docs/server/videomanagement/folder-create/
+  - type: APIReference
+    url: https://www.vdocipher.com/docs/server/videomanagement/folder-search/
+  - type: Documentation
+    url: https://www.vdocipher.com/docs/server/videomanagement/files/list/
+  - type: APIReference
+    url: https://www.vdocipher.com/docs/server/videomanagement/files/posters/
+- aid: vdocipher:vdocipher-videos-api
+  name: VdoCipher Videos API
+  description: List, search, retrieve, edit, and delete videos.
+  humanURL: https://www.vdocipher.com/docs/server/videomanagement/listing/
+  baseURL: https://dev.vdocipher.com/api
+  tags:
+  - Videos
+  properties:
+  - type: OpenAPI
+    url: openapi/vdocipher-videos-api-openapi.yml
+  - type: Documentation
+    url: https://www.vdocipher.com/docs/server/videomanagement/listing/
+  - type: APIReference
+    url: https://www.vdocipher.com/docs/server/
+  - type: PostmanCollection
+    url: collections/vdocipher.postman_collection.json
+  - type: OpenCollection
+    url: collections/vdocipher.opencollection.json
+  - type: Documentation
+    url: https://www.vdocipher.com/docs/server/upload/credentials/
+  - type: APIReference
+    url: https://www.vdocipher.com/docs/server/upload/status/
+  - type: Documentation
+    url: https://www.vdocipher.com/docs/server/playbackauth/otp/
+  - type: APIReference
+    url: https://www.vdocipher.com/docs/server/playbackauth/offline/
+  - type: Documentation
+    url: https://www.vdocipher.com/docs/server/videomanagement/folder-create/
+  - type: APIReference
+    url: https://www.vdocipher.com/docs/server/videomanagement/folder-search/
+  - type: Documentation
+    url: https://www.vdocipher.com/docs/server/videomanagement/files/list/
+  - type: APIReference
+    url: https://www.vdocipher.com/docs/server/videomanagement/files/posters/
 common:
 - type: AgenticAccess
   url: agentic-access/vdocipher-agentic-access.yml
