@@ -1,0 +1,24 @@
+{
+  "provider": "vdocipher",
+  "sources": [
+    "vdocipher-folders-api-openapi.yml",
+    "vdocipher-meta-api-openapi.yml",
+    "vdocipher-playback-api-openapi.yml",
+    "vdocipher-tags-api-openapi.yml",
+    "vdocipher-upload-api-openapi.yml",
+    "vdocipher-videos-api-openapi.yml"
+  ],
+  "outputs": [
+    "vdocipher-folders-api-openapi.yml",
+    "vdocipher-meta-api-openapi.yml",
+    "vdocipher-playback-api-openapi.yml",
+    "vdocipher-tags-api-openapi.yml",
+    "vdocipher-upload-api-openapi.yml",
+    "vdocipher-videos-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

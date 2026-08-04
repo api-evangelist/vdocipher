@@ -1,0 +1,521 @@
+openapi: 3.0.1
+info:
+  title: VdoCipher Server API
+  description: >-
+    Server-side REST API for the VdoCipher secure video hosting platform. Covers
+    video upload (credentials + status), media management (list, search, meta,
+    files, delete), folders, tags, and OTP / playbackInfo generation for
+    DRM-protected playback with optional dynamic watermarking. All requests are
+    authenticated with an `Authorization: Apisecret <API_SECRET>` header. This is
+    a faithful, representative specification authored by API Evangelist from the
+    public VdoCipher documentation; consult the official Swagger reference for the
+    authoritative contract.
+  termsOfService: https://www.vdocipher.com/terms/
+  contact:
+    name: VdoCipher Support
+    url: https://www.vdocipher.com/
+    email: support@vdocipher.com
+  version: v3
+servers:
+  - url: https://dev.vdocipher.com/api
+    description: VdoCipher server API base URL
+security:
+  - Apisecret: []
+tags:
+  - name: Videos
+    description: List, search, retrieve, edit, and delete videos.
+  - name: Upload
+    description: Obtain upload credentials and check transcoding status.
+  - name: Playback
+    description: Generate OTP and playbackInfo for authorized playback.
+  - name: Folders
+    description: Create, list, and search folders.
+  - name: Meta
+    description: Video metadata, files, posters, and captions.
+  - name: Tags
+    description: List and search video tags.
+paths:
+  /videos:
+    get:
+      operationId: listVideos
+      tags:
+        - Videos
+      summary: List videos
+      description: >-
+        Returns a paginated list of videos, newest first (20 per page by
+        default). Supports filtering by folder, free-text query, and tag.
+      parameters:
+        - name: page
+          in: query
+          description: Page number to retrieve.
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          description: Number of results per page.
+          schema:
+            type: integer
+            default: 20
+        - name: q
+          in: query
+          description: Free-text search across video ID and title.
+          schema:
+            type: string
+        - name: folderId
+          in: query
+          description: Restrict results to a single folder.
+          schema:
+            type: string
+        - name: tags
+          in: query
+          description: Filter videos by a tag.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A paginated list of videos.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VideoList'
+    put:
+      operationId: obtainUploadCredentials
+      tags:
+        - Upload
+      summary: Obtain upload credentials
+      description: >-
+        Reserves a new videoId and returns short-lived AWS S3 credentials
+        (clientPayload) used to upload the source file directly to storage.
+      parameters:
+        - name: title
+          in: query
+          required: true
+          description: Title for the new video.
+          schema:
+            type: string
+        - name: folderId
+          in: query
+          description: Folder to place the video in. Defaults to root.
+          schema:
+            type: string
+            default: root
+      responses:
+        '200':
+          description: Upload credentials and the reserved videoId.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadCredentials'
+  /videos/{videoId}:
+    get:
+      operationId: getVideoStatus
+      tags:
+        - Videos
+      summary: Get video status / details
+      description: >-
+        Returns the current status and details of a single video, including
+        transcoding progress after an upload.
+      parameters:
+        - $ref: '#/components/parameters/VideoId'
+      responses:
+        '200':
+          description: Video details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Video'
+    post:
+      operationId: editVideoMeta
+      tags:
+        - Videos
+      summary: Edit video metadata
+      description: Update editable metadata such as title, description, or tags.
+      parameters:
+        - $ref: '#/components/parameters/VideoId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VideoMetaUpdate'
+      responses:
+        '200':
+          description: The updated video.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Video'
+    delete:
+      operationId: deleteVideos
+      tags:
+        - Videos
+      summary: Delete video(s)
+      description: Deletes one or more videos identified by comma-separated IDs.
+      parameters:
+        - $ref: '#/components/parameters/VideoId'
+      responses:
+        '200':
+          description: Deletion result.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+  /videos/{videoId}/otp:
+    post:
+      operationId: generateOtp
+      tags:
+        - Playback
+      summary: Generate OTP and playbackInfo
+      description: >-
+        Generates a one-time otp / playbackInfo pair authorizing a single
+        DRM-protected playback session for the video. Optional parameters set
+        the token TTL, a dynamic per-viewer watermark (annotate), and IP/geo or
+        referrer restrictions. Must always be called from a trusted back end.
+      parameters:
+        - $ref: '#/components/parameters/VideoId'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OtpRequest'
+      responses:
+        '200':
+          description: An OTP and playbackInfo pair.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OtpResponse'
+  /videos/{videoId}/files:
+    get:
+      operationId: listVideoFiles
+      tags:
+        - Meta
+      summary: List files of a video
+      description: >-
+        Lists all files associated with a video, including poster images,
+        caption/subtitle tracks, and rendition assets.
+      parameters:
+        - $ref: '#/components/parameters/VideoId'
+      responses:
+        '200':
+          description: A list of files for the video.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VideoFile'
+  /meta/{videoId}:
+    get:
+      operationId: getVideoMeta
+      tags:
+        - Meta
+      summary: Get video meta
+      description: >-
+        Returns detailed metadata for a video, including poster image download
+        URLs, dimensions, and duration.
+      parameters:
+        - $ref: '#/components/parameters/VideoId'
+      responses:
+        '200':
+          description: Detailed video metadata.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VideoMeta'
+  /videos/tags:
+    get:
+      operationId: listTags
+      tags:
+        - Tags
+      summary: List tags
+      description: Returns all tags applied across the account's videos.
+      responses:
+        '200':
+          description: A list of tags.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+  /videos/folders:
+    get:
+      operationId: listFolders
+      tags:
+        - Folders
+      summary: List sub-folders
+      description: Lists sub-folders under a given parent folder.
+      parameters:
+        - name: parent
+          in: query
+          description: Parent folder ID. Defaults to root.
+          schema:
+            type: string
+            default: root
+      responses:
+        '200':
+          description: A list of folders.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FolderList'
+    post:
+      operationId: createFolder
+      tags:
+        - Folders
+      summary: Create folder
+      description: Creates a new folder under a parent folder.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FolderCreate'
+      responses:
+        '200':
+          description: The created folder.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Folder'
+  /videos/folders/search:
+    post:
+      operationId: searchFolders
+      tags:
+        - Folders
+      summary: Search folders by name
+      description: >-
+        Searches for a folder by name and returns the id and path of matching
+        folders.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+              required:
+                - name
+      responses:
+        '200':
+          description: Matching folders.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FolderList'
+components:
+  securitySchemes:
+    Apisecret:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: >-
+        API secret from the VdoCipher dashboard (Config tab), sent as
+        `Authorization: Apisecret <API_SECRET>`.
+  parameters:
+    VideoId:
+      name: videoId
+      in: path
+      required: true
+      description: The video ID (comma-separated for bulk delete).
+      schema:
+        type: string
+  schemas:
+    VideoList:
+      type: object
+      properties:
+        rows:
+          type: array
+          items:
+            $ref: '#/components/schemas/Video'
+        total:
+          type: integer
+        page:
+          type: integer
+        limit:
+          type: integer
+    Video:
+      type: object
+      properties:
+        id:
+          type: string
+          example: '1234567890abcdef'
+        title:
+          type: string
+          example: Introduction to Secure Video
+        description:
+          type: string
+        status:
+          type: string
+          description: Processing status of the video.
+          enum:
+            - PRE-Upload
+            - Queued
+            - Processing
+            - ready
+            - Failed
+          example: ready
+        length:
+          type: number
+          description: Duration in seconds.
+          example: 622.5
+        upload_time:
+          type: integer
+          description: Unix timestamp of upload.
+        folderId:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        poster:
+          type: string
+          format: uri
+    VideoMetaUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+    UploadCredentials:
+      type: object
+      properties:
+        clientPayload:
+          type: object
+          properties:
+            policy:
+              type: string
+            key:
+              type: string
+            x-amz-signature:
+              type: string
+            x-amz-algorithm:
+              type: string
+              example: AWS4-HMAC-SHA256
+            x-amz-date:
+              type: string
+            x-amz-credential:
+              type: string
+            uploadLink:
+              type: string
+              format: uri
+              example: https://example-bucket.s3.amazonaws.com
+        videoId:
+          type: string
+          example: '1234567890'
+    OtpRequest:
+      type: object
+      properties:
+        ttl:
+          type: integer
+          description: Time-to-live of the OTP in seconds.
+          default: 300
+          example: 300
+        whitelisthref:
+          type: array
+          description: Referrer URLs allowed to play the video.
+          items:
+            type: string
+        ipbasedgeo:
+          type: object
+          description: IP/geo allow or deny rules for the session.
+        annotate:
+          type: string
+          description: >-
+            JSON string describing dynamic per-viewer watermark annotations
+            (text, RTMP, or image) burned over the DRM stream.
+          example: >-
+            [{"type":"rtmp","text":"viewer@example.com","alpha":"0.60","color":"0xFFFFFF","size":"15","interval":"5000"}]
+    OtpResponse:
+      type: object
+      properties:
+        otp:
+          type: string
+          example: '1234567890abcdefghijk'
+        playbackInfo:
+          type: string
+          example: 'z1y2x3w4v5u6t7s8r9q10'
+    VideoFile:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+          description: File type (e.g. poster, subtitle, video).
+        url:
+          type: string
+          format: uri
+    VideoMeta:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        length:
+          type: number
+        posters:
+          type: array
+          items:
+            type: object
+            properties:
+              url:
+                type: string
+                format: uri
+              height:
+                type: integer
+              width:
+                type: integer
+    Folder:
+      type: object
+      properties:
+        id:
+          type: string
+          example: root
+        name:
+          type: string
+        parent:
+          type: string
+        path:
+          type: string
+    FolderList:
+      type: object
+      properties:
+        folderId:
+          type: string
+        name:
+          type: string
+        parent:
+          type: string
+        folders:
+          type: array
+          items:
+            $ref: '#/components/schemas/Folder'
+    FolderCreate:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          example: Course Modules
+        parent:
+          type: string
+          description: Parent folder ID. Use "root" for the top level.
+          example: root
