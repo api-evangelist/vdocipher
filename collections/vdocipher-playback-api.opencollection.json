@@ -1,0 +1,49 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "VdoCipher Server Folders Playback API",
+    "version": "v3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Playback",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Generate OTP and playbackInfo",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dev.vdocipher.com/api/videos/:videoId/otp",
+            "params": [
+              {
+                "name": "videoId",
+                "value": "",
+                "type": "path",
+                "description": "The video ID (comma-separated for bulk delete)."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generates a one-time otp / playbackInfo pair authorizing a single DRM-protected playback session for the video. Optional parameters set the token TTL, a dynamic per-viewer watermark (annotate), and IP/geo or referrer restrictions. Must always be called from a trusted back end."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

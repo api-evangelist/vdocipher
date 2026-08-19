@@ -1,0 +1,345 @@
+{
+  "item": [
+    {
+      "id": "1161b80d-b4c5-4363-8a24-07021e5cc441",
+      "name": "Folders",
+      "description": {
+        "content": "Create, list, and search folders.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "86105450-0ec6-4370-a0da-793832e4961d",
+          "name": "List sub-folders",
+          "request": {
+            "name": "List sub-folders",
+            "description": {
+              "content": "Lists sub-folders under a given parent folder.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "videos",
+                "folders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "parent",
+                  "value": "root",
+                  "description": "Parent folder ID. Defaults to root."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d6a1b916-c6d1-4ca6-b547-990843bbad07",
+              "name": "A list of folders.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "videos",
+                    "folders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "parent",
+                      "value": "root"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"folderId\": \"string\",\n  \"name\": \"string\",\n  \"parent\": \"string\",\n  \"folders\": [\n    {\n      \"id\": \"root\",\n      \"name\": \"string\",\n      \"parent\": \"string\",\n      \"path\": \"string\"\n    },\n    {\n      \"id\": \"root\",\n      \"name\": \"string\",\n      \"parent\": \"string\",\n      \"path\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cb66ee8f-23ea-4a34-8111-5ce28ed3bd6e",
+          "name": "Create folder",
+          "request": {
+            "name": "Create folder",
+            "description": {
+              "content": "Creates a new folder under a parent folder.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "videos",
+                "folders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"parent\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4211eac8-8e4f-44bd-89bf-f9e6bbe4cbc8",
+              "name": "The created folder.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "videos",
+                    "folders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Course Modules\",\n  \"parent\": \"root\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"root\",\n  \"name\": \"string\",\n  \"parent\": \"string\",\n  \"path\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d2b0d679-a14f-44ee-89a4-64e17023ad08",
+          "name": "Search folders by name",
+          "request": {
+            "name": "Search folders by name",
+            "description": {
+              "content": "Searches for a folder by name and returns the id and path of matching folders.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "videos",
+                "folders",
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "73c521f1-7893-4cb6-8c65-1809321bd4be",
+              "name": "Matching folders.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "videos",
+                    "folders",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"folderId\": \"string\",\n  \"name\": \"string\",\n  \"parent\": \"string\",\n  \"folders\": [\n    {\n      \"id\": \"root\",\n      \"name\": \"string\",\n      \"parent\": \"string\",\n      \"path\": \"string\"\n    },\n    {\n      \"id\": \"root\",\n      \"name\": \"string\",\n      \"parent\": \"string\",\n      \"path\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://dev.vdocipher.com/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "8f7d7035-bf0f-4512-8a40-f304063b7224",
+    "name": "VdoCipher Server Folders API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Server-side REST API for the VdoCipher secure video hosting platform. Covers video upload (credentials + status), media management (list, search, meta, files, delete), folders, tags, and OTP / playbackInfo generation for DRM-protected playback with optional dynamic watermarking. All requests are authenticated with an `Authorization: Apisecret <API_SECRET>` header. This is a faithful, representative specification authored by API Evangelist from the public VdoCipher documentation; consult the official Swagger reference for the authoritative contract.\n\nContact Support:\n Name: VdoCipher Support\n Email: support@vdocipher.com",
+      "type": "text/plain"
+    }
+  }
+}

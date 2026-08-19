@@ -1,0 +1,64 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "VdoCipher Server Folders Meta API",
+    "version": "v3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Meta",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List files of a video",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.vdocipher.com/api/videos/:videoId/files",
+            "params": [
+              {
+                "name": "videoId",
+                "value": "",
+                "type": "path",
+                "description": "The video ID (comma-separated for bulk delete)."
+              }
+            ]
+          },
+          "docs": "Lists all files associated with a video, including poster images, caption/subtitle tracks, and rendition assets."
+        },
+        {
+          "info": {
+            "name": "Get video meta",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.vdocipher.com/api/meta/:videoId",
+            "params": [
+              {
+                "name": "videoId",
+                "value": "",
+                "type": "path",
+                "description": "The video ID (comma-separated for bulk delete)."
+              }
+            ]
+          },
+          "docs": "Returns detailed metadata for a video, including poster image download URLs, dimensions, and duration."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

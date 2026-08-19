@@ -1,0 +1,488 @@
+{
+  "item": [
+    {
+      "id": "2fda6d29-323a-4567-81f1-5831f0949ee5",
+      "name": "Videos",
+      "description": {
+        "content": "List, search, retrieve, edit, and delete videos.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a300f43f-7d62-409b-952c-db7f2a3c636c",
+          "name": "List videos",
+          "request": {
+            "name": "List videos",
+            "description": {
+              "content": "Returns a paginated list of videos, newest first (20 per page by default). Supports filtering by folder, free-text query, and tag.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "videos"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number to retrieve."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "20",
+                  "description": "Number of results per page."
+                },
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Free-text search across video ID and title."
+                },
+                {
+                  "disabled": false,
+                  "key": "folderId",
+                  "value": "<string>",
+                  "description": "Restrict results to a single folder."
+                },
+                {
+                  "disabled": false,
+                  "key": "tags",
+                  "value": "<string>",
+                  "description": "Filter videos by a tag."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1fc1db64-4ba5-4171-a0e1-9267caf30f45",
+              "name": "A paginated list of videos.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "videos"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "folderId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"rows\": [\n    {\n      \"id\": \"1234567890abcdef\",\n      \"title\": \"Introduction to Secure Video\",\n      \"description\": \"string\",\n      \"status\": \"ready\",\n      \"length\": 622.5,\n      \"upload_time\": 937,\n      \"folderId\": \"string\",\n      \"tags\": [\n        \"string\",\n        \"string\"\n      ],\n      \"poster\": \"http://REFmBoThKwsTAL.iosI.YQlQoRfujh7hJLVWvLZ8cT9ZB89iUZ45Kwv3\"\n    },\n    {\n      \"id\": \"1234567890abcdef\",\n      \"title\": \"Introduction to Secure Video\",\n      \"description\": \"string\",\n      \"status\": \"ready\",\n      \"length\": 622.5,\n      \"upload_time\": 8614,\n      \"folderId\": \"string\",\n      \"tags\": [\n        \"string\",\n        \"string\"\n      ],\n      \"poster\": \"https://VIVOavXWwIdotFrPHXiiElwxfJ.mqbwfmmd6xskmzd0rETyixtnAu\"\n    }\n  ],\n  \"total\": 2183,\n  \"page\": 3843,\n  \"limit\": 8673\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c19779c9-5baa-4e27-b192-6647556c622e",
+          "name": "Get video status / details",
+          "request": {
+            "name": "Get video status / details",
+            "description": {
+              "content": "Returns the current status and details of a single video, including transcoding progress after an upload.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "videos",
+                ":videoId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "videoId",
+                  "description": "(Required) The video ID (comma-separated for bulk delete)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8fb271ff-d93b-4472-b6ba-e8f44e23850d",
+              "name": "Video details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "videos",
+                    ":videoId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "videoId",
+                      "description": "(Required) The video ID (comma-separated for bulk delete)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"1234567890abcdef\",\n  \"title\": \"Introduction to Secure Video\",\n  \"description\": \"string\",\n  \"status\": \"ready\",\n  \"length\": 622.5,\n  \"upload_time\": 2136,\n  \"folderId\": \"string\",\n  \"tags\": [\n    \"string\",\n    \"string\"\n  ],\n  \"poster\": \"http://SejM.fekPAo8sQF0FBPn2OVe1EM-X3r7Hn+B6Wj\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "78919e7c-511d-434e-af40-8411d7e674a3",
+          "name": "Edit video metadata",
+          "request": {
+            "name": "Edit video metadata",
+            "description": {
+              "content": "Update editable metadata such as title, description, or tags.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "videos",
+                ":videoId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "videoId",
+                  "description": "(Required) The video ID (comma-separated for bulk delete)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"<string>\",\n  \"description\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a2ae63c3-cd7e-493a-8e84-e6cc63158b63",
+              "name": "The updated video.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "videos",
+                    ":videoId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "videoId",
+                      "description": "(Required) The video ID (comma-separated for bulk delete)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"<string>\",\n  \"description\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"1234567890abcdef\",\n  \"title\": \"Introduction to Secure Video\",\n  \"description\": \"string\",\n  \"status\": \"ready\",\n  \"length\": 622.5,\n  \"upload_time\": 2136,\n  \"folderId\": \"string\",\n  \"tags\": [\n    \"string\",\n    \"string\"\n  ],\n  \"poster\": \"http://SejM.fekPAo8sQF0FBPn2OVe1EM-X3r7Hn+B6Wj\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7b1ffba6-3d06-47fd-a450-e21ac356b7e4",
+          "name": "Delete video(s)",
+          "request": {
+            "name": "Delete video(s)",
+            "description": {
+              "content": "Deletes one or more videos identified by comma-separated IDs.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "videos",
+                ":videoId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "videoId",
+                  "description": "(Required) The video ID (comma-separated for bulk delete)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3d7775ef-4904-4e04-a21a-29a50036da45",
+              "name": "Deletion result.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "videos",
+                    ":videoId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "videoId",
+                      "description": "(Required) The video ID (comma-separated for bulk delete)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://dev.vdocipher.com/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "5d44ce41-66db-41f4-82f7-b33c651fe94a",
+    "name": "VdoCipher Server Folders Videos API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Server-side REST API for the VdoCipher secure video hosting platform. Covers video upload (credentials + status), media management (list, search, meta, files, delete), folders, tags, and OTP / playbackInfo generation for DRM-protected playback with optional dynamic watermarking. All requests are authenticated with an `Authorization: Apisecret <API_SECRET>` header. This is a faithful, representative specification authored by API Evangelist from the public VdoCipher documentation; consult the official Swagger reference for the authoritative contract.\n\nContact Support:\n Name: VdoCipher Support\n Email: support@vdocipher.com",
+      "type": "text/plain"
+    }
+  }
+}

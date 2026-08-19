@@ -1,0 +1,168 @@
+{
+  "item": [
+    {
+      "id": "21f860a3-8a0f-46d1-8029-b0fcf640889b",
+      "name": "Playback",
+      "description": {
+        "content": "Generate OTP and playbackInfo for authorized playback.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0b82df8c-6d14-4a88-8d99-66d740a1335d",
+          "name": "Generate OTP and playbackInfo",
+          "request": {
+            "name": "Generate OTP and playbackInfo",
+            "description": {
+              "content": "Generates a one-time otp / playbackInfo pair authorizing a single DRM-protected playback session for the video. Optional parameters set the token TTL, a dynamic per-viewer watermark (annotate), and IP/geo or referrer restrictions. Must always be called from a trusted back end.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "videos",
+                ":videoId",
+                "otp"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "videoId",
+                  "description": "(Required) The video ID (comma-separated for bulk delete)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ttl\": 300,\n  \"whitelisthref\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"ipbasedgeo\": \"<object>\",\n  \"annotate\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6f7437bf-13db-46b8-986a-0ad782cc1af1",
+              "name": "An OTP and playbackInfo pair.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "videos",
+                    ":videoId",
+                    "otp"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "videoId",
+                      "description": "(Required) The video ID (comma-separated for bulk delete)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ttl\": 300,\n  \"whitelisthref\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"ipbasedgeo\": \"<object>\",\n  \"annotate\": \"[{\\\"type\\\":\\\"rtmp\\\",\\\"text\\\":\\\"viewer@example.com\\\",\\\"alpha\\\":\\\"0.60\\\",\\\"color\\\":\\\"0xFFFFFF\\\",\\\"size\\\":\\\"15\\\",\\\"interval\\\":\\\"5000\\\"}]\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"otp\": \"1234567890abcdefghijk\",\n  \"playbackInfo\": \"z1y2x3w4v5u6t7s8r9q10\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://dev.vdocipher.com/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "f90ec2ac-98af-443a-8266-877370db82fc",
+    "name": "VdoCipher Server Folders Playback API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Server-side REST API for the VdoCipher secure video hosting platform. Covers video upload (credentials + status), media management (list, search, meta, files, delete), folders, tags, and OTP / playbackInfo generation for DRM-protected playback with optional dynamic watermarking. All requests are authenticated with an `Authorization: Apisecret <API_SECRET>` header. This is a faithful, representative specification authored by API Evangelist from the public VdoCipher documentation; consult the official Swagger reference for the authoritative contract.\n\nContact Support:\n Name: VdoCipher Support\n Email: support@vdocipher.com",
+      "type": "text/plain"
+    }
+  }
+}

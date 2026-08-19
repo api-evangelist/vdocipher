@@ -1,0 +1,75 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "VdoCipher Server Folders API",
+    "version": "v3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Folders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List sub-folders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.vdocipher.com/api/videos/folders",
+            "params": [
+              {
+                "name": "parent",
+                "value": "",
+                "type": "query",
+                "description": "Parent folder ID. Defaults to root."
+              }
+            ]
+          },
+          "docs": "Lists sub-folders under a given parent folder."
+        },
+        {
+          "info": {
+            "name": "Create folder",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dev.vdocipher.com/api/videos/folders",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new folder under a parent folder."
+        },
+        {
+          "info": {
+            "name": "Search folders by name",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dev.vdocipher.com/api/videos/folders/search",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Searches for a folder by name and returns the id and path of matching folders."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

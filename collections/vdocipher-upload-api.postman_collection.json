@@ -1,0 +1,149 @@
+{
+  "item": [
+    {
+      "id": "f871b890-afa0-456f-a7c4-68be17b93781",
+      "name": "Upload",
+      "description": {
+        "content": "Obtain upload credentials and check transcoding status.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f93908ec-40b8-4fd2-8bfc-ec4477ef36b7",
+          "name": "Obtain upload credentials",
+          "request": {
+            "name": "Obtain upload credentials",
+            "description": {
+              "content": "Reserves a new videoId and returns short-lived AWS S3 credentials (clientPayload) used to upload the source file directly to storage.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "videos"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "title",
+                  "value": "<string>",
+                  "description": "(Required) Title for the new video."
+                },
+                {
+                  "disabled": false,
+                  "key": "folderId",
+                  "value": "root",
+                  "description": "Folder to place the video in. Defaults to root."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "083e5a66-394d-47de-8192-2cbaf6a46c61",
+              "name": "Upload credentials and the reserved videoId.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "videos"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "title",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "folderId",
+                      "value": "root"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"clientPayload\": {\n    \"policy\": \"string\",\n    \"key\": \"string\",\n    \"x-amz-signature\": \"string\",\n    \"x-amz-algorithm\": \"AWS4-HMAC-SHA256\",\n    \"x-amz-date\": \"string\",\n    \"x-amz-credential\": \"string\",\n    \"uploadLink\": \"https://example-bucket.s3.amazonaws.com\"\n  },\n  \"videoId\": \"1234567890\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://dev.vdocipher.com/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "72fd2b96-fa0b-48b7-84c2-0217a3d7edca",
+    "name": "VdoCipher Server Folders Upload API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Server-side REST API for the VdoCipher secure video hosting platform. Covers video upload (credentials + status), media management (list, search, meta, files, delete), folders, tags, and OTP / playbackInfo generation for DRM-protected playback with optional dynamic watermarking. All requests are authenticated with an `Authorization: Apisecret <API_SECRET>` header. This is a faithful, representative specification authored by API Evangelist from the public VdoCipher documentation; consult the official Swagger reference for the authoritative contract.\n\nContact Support:\n Name: VdoCipher Support\n Email: support@vdocipher.com",
+      "type": "text/plain"
+    }
+  }
+}

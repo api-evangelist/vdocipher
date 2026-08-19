@@ -1,0 +1,51 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "VdoCipher Server Folders Upload API",
+    "version": "v3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Upload",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Obtain upload credentials",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://dev.vdocipher.com/api/videos",
+            "params": [
+              {
+                "name": "title",
+                "value": "",
+                "type": "query",
+                "description": "Title for the new video."
+              },
+              {
+                "name": "folderId",
+                "value": "",
+                "type": "query",
+                "description": "Folder to place the video in. Defaults to root."
+              }
+            ]
+          },
+          "docs": "Reserves a new videoId and returns short-lived AWS S3 credentials (clientPayload) used to upload the source file directly to storage."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

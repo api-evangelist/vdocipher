@@ -1,0 +1,243 @@
+{
+  "item": [
+    {
+      "id": "e3ee4ba6-d76c-4a1e-92ea-16e57c320f18",
+      "name": "Meta",
+      "description": {
+        "content": "Video metadata, files, posters, and captions.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9fd346b7-fcc2-435a-a57f-bcd7b4712f99",
+          "name": "List files of a video",
+          "request": {
+            "name": "List files of a video",
+            "description": {
+              "content": "Lists all files associated with a video, including poster images, caption/subtitle tracks, and rendition assets.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "videos",
+                ":videoId",
+                "files"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "videoId",
+                  "description": "(Required) The video ID (comma-separated for bulk delete)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8d8e530e-4e00-4595-bf89-0dbdcd2f2834",
+              "name": "A list of files for the video.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "videos",
+                    ":videoId",
+                    "files"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "videoId",
+                      "description": "(Required) The video ID (comma-separated for bulk delete)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"type\": \"string\",\n    \"url\": \"http://zRmmzxvIiaRDDxHzKdiESXpwcyB.hmmrn+ZVmSsEQHv00mWUniS5ODYOXnT-y3\"\n  },\n  {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"type\": \"string\",\n    \"url\": \"https://sEnvxhXjjwCeQXoTXtCWvsuVtd.wvaG3K4SV5om0z+BfwkQMRWWWBQpQBy\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "72485755-d887-4673-8574-273ab32f3733",
+          "name": "Get video meta",
+          "request": {
+            "name": "Get video meta",
+            "description": {
+              "content": "Returns detailed metadata for a video, including poster image download URLs, dimensions, and duration.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "meta",
+                ":videoId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "videoId",
+                  "description": "(Required) The video ID (comma-separated for bulk delete)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8a99941a-7be5-40d9-afd3-e0e5f9c716c8",
+              "name": "Detailed video metadata.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "meta",
+                    ":videoId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "videoId",
+                      "description": "(Required) The video ID (comma-separated for bulk delete)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"title\": \"string\",\n  \"length\": 5133.943607615101,\n  \"posters\": [\n    {\n      \"url\": \"http://yjcBhyiPNWQYJpJFwIC.jrndVih.LWuvDmC+Xtl09iz28leSJZTzz5J\",\n      \"height\": 4488,\n      \"width\": 5998\n    },\n    {\n      \"url\": \"https://JcncXzqQLkDgdhxGeuSDPQCiHpyZ.dbzsYlA7LeuZS1QCGkcTepi.ReDX1mVK.kj\",\n      \"height\": 2468,\n      \"width\": 2199\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://dev.vdocipher.com/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "44d13121-4884-438e-a1b3-5a655c22c3a7",
+    "name": "VdoCipher Server Folders Meta API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Server-side REST API for the VdoCipher secure video hosting platform. Covers video upload (credentials + status), media management (list, search, meta, files, delete), folders, tags, and OTP / playbackInfo generation for DRM-protected playback with optional dynamic watermarking. All requests are authenticated with an `Authorization: Apisecret <API_SECRET>` header. This is a faithful, representative specification authored by API Evangelist from the public VdoCipher documentation; consult the official Swagger reference for the authoritative contract.\n\nContact Support:\n Name: VdoCipher Support\n Email: support@vdocipher.com",
+      "type": "text/plain"
+    }
+  }
+}
