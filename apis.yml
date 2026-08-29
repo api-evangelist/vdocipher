@@ -7,6 +7,18 @@ description: VdoCipher is a secure video hosting platform that delivers Hollywoo
   OTT businesses. Its server-side REST API handles video upload, media management,
   folders, dynamic viewer watermarking, and OTP/playbackInfo generation for authorized
   playback, all secured with an Apisecret authorization header.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
