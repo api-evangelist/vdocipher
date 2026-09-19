@@ -221,6 +221,8 @@ apis:
   humanURL: https://www.vdocipher.com/docs/server/videomanagement/listing/
   baseURL: https://dev.vdocipher.com/api
   tags:
+  - Video
+  tags_raw:
   - Videos
   properties:
   - type: OpenAPI
