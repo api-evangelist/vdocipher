@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: VdoCipher Server Folders Meta API
-  description: 'Server-side REST API for the VdoCipher secure video hosting platform. Covers video upload (credentials + status), media management (list, search, meta, files, delete), folders, tags, and OTP / playbackInfo generation for DRM-protected playback with optional dynamic watermarking. All requests are authenticated with an `Authorization: Apisecret <API_SECRET>` header. This is a faithful, representative specification authored by API Evangelist from the public VdoCipher documentation; consult the official Swagger reference for the authoritative contract.'
+  title: VdoCipher Server Meta API
+  description: Server-side REST API for the VdoCipher secure video hosting platform.
   termsOfService: https://www.vdocipher.com/terms/
   contact:
     name: VdoCipher Support

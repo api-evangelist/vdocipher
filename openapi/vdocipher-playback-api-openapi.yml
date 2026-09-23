@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: VdoCipher Server Folders Playback API
-  description: 'Server-side REST API for the VdoCipher secure video hosting platform. Covers video upload (credentials + status), media management (list, search, meta, files, delete), folders, tags, and OTP / playbackInfo generation for DRM-protected playback with optional dynamic watermarking. All requests are authenticated with an `Authorization: Apisecret <API_SECRET>` header. This is a faithful, representative specification authored by API Evangelist from the public VdoCipher documentation; consult the official Swagger reference for the authoritative contract.'
+  title: VdoCipher Server Playback API
+  description: Server-side REST API for the VdoCipher secure video hosting platform.
   termsOfService: https://www.vdocipher.com/terms/
   contact:
     name: VdoCipher Support
@@ -41,6 +41,15 @@ paths:
                 $ref: '#/components/schemas/OtpResponse'
 components:
   schemas:
+    OtpResponse:
+      type: object
+      properties:
+        otp:
+          type: string
+          example: 1234567890abcdefghijk
+        playbackInfo:
+          type: string
+          example: z1y2x3w4v5u6t7s8r9q10
     OtpRequest:
       type: object
       properties:
@@ -61,15 +70,6 @@ components:
           type: string
           description: JSON string describing dynamic per-viewer watermark annotations (text, RTMP, or image) burned over the DRM stream.
           example: '[{"type":"rtmp","text":"viewer@example.com","alpha":"0.60","color":"0xFFFFFF","size":"15","interval":"5000"}]'
-    OtpResponse:
-      type: object
-      properties:
-        otp:
-          type: string
-          example: 1234567890abcdefghijk
-        playbackInfo:
-          type: string
-          example: z1y2x3w4v5u6t7s8r9q10
   parameters:
     VideoId:
       name: videoId
