@@ -53,6 +53,19 @@ paths:
                 $ref: '#/components/schemas/VideoMeta'
 components:
   schemas:
+    VideoFile:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+          description: File type (e.g. poster, subtitle, video).
+        url:
+          type: string
+          format: uri
     VideoMeta:
       type: object
       properties:
@@ -74,19 +87,6 @@ components:
                 type: integer
               width:
                 type: integer
-    VideoFile:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        type:
-          type: string
-          description: File type (e.g. poster, subtitle, video).
-        url:
-          type: string
-          format: uri
   parameters:
     VideoId:
       name: videoId

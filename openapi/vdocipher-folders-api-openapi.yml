@@ -84,18 +84,6 @@ paths:
                 $ref: '#/components/schemas/FolderList'
 components:
   schemas:
-    Folder:
-      type: object
-      properties:
-        id:
-          type: string
-          example: root
-        name:
-          type: string
-        parent:
-          type: string
-        path:
-          type: string
     FolderList:
       type: object
       properties:
@@ -121,6 +109,18 @@ components:
           type: string
           description: Parent folder ID. Use "root" for the top level.
           example: root
+    Folder:
+      type: object
+      properties:
+        id:
+          type: string
+          example: root
+        name:
+          type: string
+        parent:
+          type: string
+        path:
+          type: string
   securitySchemes:
     Apisecret:
       type: apiKey
