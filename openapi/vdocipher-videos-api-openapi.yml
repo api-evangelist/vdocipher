@@ -115,26 +115,7 @@ paths:
                   message:
                     type: string
 components:
-  parameters:
-    VideoId:
-      name: videoId
-      in: path
-      required: true
-      description: The video ID (comma-separated for bulk delete).
-      schema:
-        type: string
   schemas:
-    VideoMetaUpdate:
-      type: object
-      properties:
-        title:
-          type: string
-        description:
-          type: string
-        tags:
-          type: array
-          items:
-            type: string
     VideoList:
       type: object
       properties:
@@ -185,6 +166,25 @@ components:
         poster:
           type: string
           format: uri
+    VideoMetaUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+  parameters:
+    VideoId:
+      name: videoId
+      in: path
+      required: true
+      description: The video ID (comma-separated for bulk delete).
+      schema:
+        type: string
   securitySchemes:
     Apisecret:
       type: apiKey
