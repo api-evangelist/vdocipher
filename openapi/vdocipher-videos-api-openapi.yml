@@ -129,6 +129,17 @@ components:
           type: integer
         limit:
           type: integer
+    VideoMetaUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
     Video:
       type: object
       properties:
@@ -166,17 +177,6 @@ components:
         poster:
           type: string
           format: uri
-    VideoMetaUpdate:
-      type: object
-      properties:
-        title:
-          type: string
-        description:
-          type: string
-        tags:
-          type: array
-          items:
-            type: string
   parameters:
     VideoId:
       name: videoId

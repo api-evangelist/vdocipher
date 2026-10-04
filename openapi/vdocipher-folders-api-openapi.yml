@@ -84,6 +84,19 @@ paths:
                 $ref: '#/components/schemas/FolderList'
 components:
   schemas:
+    FolderList:
+      type: object
+      properties:
+        folderId:
+          type: string
+        name:
+          type: string
+        parent:
+          type: string
+        folders:
+          type: array
+          items:
+            $ref: '#/components/schemas/Folder'
     FolderCreate:
       type: object
       required:
@@ -108,19 +121,6 @@ components:
           type: string
         path:
           type: string
-    FolderList:
-      type: object
-      properties:
-        folderId:
-          type: string
-        name:
-          type: string
-        parent:
-          type: string
-        folders:
-          type: array
-          items:
-            $ref: '#/components/schemas/Folder'
   securitySchemes:
     Apisecret:
       type: apiKey

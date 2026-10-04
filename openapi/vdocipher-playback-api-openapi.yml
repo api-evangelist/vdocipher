@@ -40,6 +40,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/OtpResponse'
 components:
+  parameters:
+    VideoId:
+      name: videoId
+      in: path
+      required: true
+      description: The video ID (comma-separated for bulk delete).
+      schema:
+        type: string
   schemas:
     OtpResponse:
       type: object
@@ -70,14 +78,6 @@ components:
           type: string
           description: JSON string describing dynamic per-viewer watermark annotations (text, RTMP, or image) burned over the DRM stream.
           example: '[{"type":"rtmp","text":"viewer@example.com","alpha":"0.60","color":"0xFFFFFF","size":"15","interval":"5000"}]'
-  parameters:
-    VideoId:
-      name: videoId
-      in: path
-      required: true
-      description: The video ID (comma-separated for bulk delete).
-      schema:
-        type: string
   securitySchemes:
     Apisecret:
       type: apiKey
