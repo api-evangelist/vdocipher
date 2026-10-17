@@ -97,18 +97,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Folder'
-    FolderCreate:
-      type: object
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          example: Course Modules
-        parent:
-          type: string
-          description: Parent folder ID. Use "root" for the top level.
-          example: root
     Folder:
       type: object
       properties:
@@ -121,6 +109,18 @@ components:
           type: string
         path:
           type: string
+    FolderCreate:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          example: Course Modules
+        parent:
+          type: string
+          description: Parent folder ID. Use "root" for the top level.
+          example: root
   securitySchemes:
     Apisecret:
       type: apiKey
