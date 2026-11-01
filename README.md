@@ -1,4 +1,4 @@
-# VdoCipher (vdocipher)
+# VdoCipher
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,163 +66,126 @@
 
 VdoCipher is a secure video hosting platform that delivers Hollywood-grade DRM (Google Widevine and Apple FairPlay) encrypted streaming for e-learning and OTT businesses. Its server-side REST API handles video upload, media management, folders, dynamic viewer watermarking, and OTP/playbackInfo generation for authorized playback, all secured with an Apisecret authorization header.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/vdocipher/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/vdocipher/refs/heads/main/apis.yml)
+**Areas:** Video · Secure Video Hosting · DRM · Streaming · E-Learning · OTT · Watermarking
 
-## Tags
+## VdoCipher on APIs.io
 
-- Video
-- Secure Video Hosting
-- DRM
-- Streaming
-- E-Learning
-- OTT
-- Watermarking
+Everything profiled for VdoCipher is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/vdocipher/](https://apis.io/providers/vdocipher/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (6)
 
-- **Created:** 2026-07-01
-- **Modified:** 2026-07-01
+- [VdoCipher Folders API](https://apis.io/apis/vdocipher/vdocipher-folders-api/) — Create, list, and search folders.
+- [VdoCipher Meta API](https://apis.io/apis/vdocipher/vdocipher-meta-api/) — Video metadata, files, posters, and captions.
+- [VdoCipher Playback API](https://apis.io/apis/vdocipher/vdocipher-playback-api/) — Generate OTP and playbackInfo for authorized playback.
+- [VdoCipher Tags API](https://apis.io/apis/vdocipher/vdocipher-tags-api/) — List and search video tags.
+- [VdoCipher Upload API](https://apis.io/apis/vdocipher/vdocipher-upload-api/) — Obtain upload credentials and check transcoding status.
+- [VdoCipher Videos API](https://apis.io/apis/vdocipher/vdocipher-videos-api/) — List, search, retrieve, edit, and delete videos.
 
-## APIs
+### Published properties
 
-### VdoCipher Videos API
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-List, search, retrieve, edit, and delete videos in a VdoCipher account. Supports pagination, folder scoping, free-text query, and tag filtering over the video library.
+#### Agentic access (1)
 
-- **Human URL:** [https://www.vdocipher.com/docs/server/videomanagement/listing/](https://www.vdocipher.com/docs/server/videomanagement/listing/)
-- **Base URL:** `https://dev.vdocipher.com/api`
+Which operations an agent can call, which act, and which need a human in the loop.
 
-#### Tags
+- [Vdocipher Agentic Access](https://apis.io/agentic-access/vdocipher/vdocipher-agentic-access/)
 
-- Videos
-- Media Management
-- Listing
-- Search
+#### Collections (7)
 
-#### Properties
+Postman and Open Collection request collections.
 
-- [Documentation](https://www.vdocipher.com/docs/server/videomanagement/listing/)
-- [API Reference](https://www.vdocipher.com/docs/server/)
-- [OpenAPI](openapi/vdocipher-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/vdocipher.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/vdocipher.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [VdoCipher Server API](https://apis.io/collections/vdocipher/open-vdocipher/)
+- [VdoCipher Server Folders API](https://apis.io/collections/vdocipher/open-vdocipher-folders-api/)
+- [VdoCipher Server Folders Meta API](https://apis.io/collections/vdocipher/open-vdocipher-meta-api/)
+- [VdoCipher Server Folders Playback API](https://apis.io/collections/vdocipher/open-vdocipher-playback-api/)
+- [VdoCipher Server Folders Tags API](https://apis.io/collections/vdocipher/open-vdocipher-tags-api/)
+- [VdoCipher Server Folders Upload API](https://apis.io/collections/vdocipher/open-vdocipher-upload-api/)
+- [VdoCipher Server Folders Videos API](https://apis.io/collections/vdocipher/open-vdocipher-videos-api/)
 
-### VdoCipher Upload API
+#### Security (2)
 
-Obtain short-lived AWS S3 upload credentials (clientPayload) and a new videoId, then upload a source file directly to storage and poll transcoding status until the video is ready.
+Authentication, trust centre, and vulnerability disclosure.
 
-- **Human URL:** [https://www.vdocipher.com/docs/server/upload/credentials/](https://www.vdocipher.com/docs/server/upload/credentials/)
-- **Base URL:** `https://dev.vdocipher.com/api`
+- [Vdocipher Authentication](https://apis.io/security/vdocipher/vdocipher-authentication/)
+- [Vdocipher Domain Security](https://apis.io/security/vdocipher/vdocipher-domain-security/)
 
-#### Tags
+#### Plans and pricing (1)
 
-- Upload
-- Ingest
-- Credentials
+Published plans, tiers and prices.
 
-#### Properties
+- [Vdocipher Plans Pricing](https://apis.io/plans/vdocipher/vdocipher-plans-pricing/)
 
-- [Documentation](https://www.vdocipher.com/docs/server/upload/credentials/)
-- [API Reference](https://www.vdocipher.com/docs/server/upload/status/)
-- [OpenAPI](openapi/vdocipher-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/vdocipher.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/vdocipher.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Rate limits (1)
 
-### VdoCipher OTP & Playback Credentials API
+Published request limits.
 
-Generate a one-time otp and playbackInfo pair on the back end for a specific video so the DRM-protected player can authorize a single viewing session, with optional TTL, dynamic watermark, and IP/geo restrictions.
+- [Vdocipher Rate Limits](https://apis.io/rate-limits/vdocipher/vdocipher-rate-limits/)
 
-- **Human URL:** [https://www.vdocipher.com/docs/server/playbackauth/otp/](https://www.vdocipher.com/docs/server/playbackauth/otp/)
-- **Base URL:** `https://dev.vdocipher.com/api`
+#### FinOps (1)
 
-#### Tags
+What the API costs to run, by operation.
 
-- OTP
-- Playback
-- Authentication
-- DRM
+- [Vdocipher Finops](https://apis.io/finops/vdocipher/vdocipher-finops/)
 
-#### Properties
+## Where to find this API
 
-- [Documentation](https://www.vdocipher.com/docs/server/playbackauth/otp/)
-- [API Reference](https://www.vdocipher.com/docs/server/playbackauth/offline/)
-- [OpenAPI](openapi/vdocipher-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/vdocipher.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/vdocipher.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-### VdoCipher Folders API
-
-Create, list sub-folders under, and search a hierarchical folder tree (rooted at "root") used to organize the video library.
-
-- **Human URL:** [https://www.vdocipher.com/docs/server/videomanagement/folder-create/](https://www.vdocipher.com/docs/server/videomanagement/folder-create/)
-- **Base URL:** `https://dev.vdocipher.com/api`
-
-#### Tags
-
-- Folders
-- Organization
-
-#### Properties
-
-- [Documentation](https://www.vdocipher.com/docs/server/videomanagement/folder-create/)
-- [API Reference](https://www.vdocipher.com/docs/server/videomanagement/folder-search/)
-- [OpenAPI](openapi/vdocipher-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/vdocipher.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/vdocipher.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### VdoCipher Watermark API
-
-Attach a dynamic, per-viewer annotation (text, RTMP, or image watermark) to a playback session via the OTP request annotate parameter, burning identifying marks such as the viewer email or IP over the DRM stream.
-
-- **Human URL:** [https://www.vdocipher.com/docs/server/playbackauth/otp/](https://www.vdocipher.com/docs/server/playbackauth/otp/)
-- **Base URL:** `https://dev.vdocipher.com/api`
-
-#### Tags
-
-- Watermark
-- Annotation
-- Security
-
-#### Properties
-
-- [Documentation](https://www.vdocipher.com/docs/server/playbackauth/otp/)
-- [OpenAPI](openapi/vdocipher-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/vdocipher.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/vdocipher.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### VdoCipher Meta & Files API
-
-Retrieve detailed metadata for a video and list its associated files - poster images, captions/subtitles, and rendition assets - plus list and search the tags applied across the library.
-
-- **Human URL:** [https://www.vdocipher.com/docs/server/videomanagement/files/list/](https://www.vdocipher.com/docs/server/videomanagement/files/list/)
-- **Base URL:** `https://dev.vdocipher.com/api`
-
-#### Tags
-
-- Metadata
-- Files
-- Posters
-- Captions
-
-#### Properties
-
-- [Documentation](https://www.vdocipher.com/docs/server/videomanagement/files/list/)
-- [API Reference](https://www.vdocipher.com/docs/server/videomanagement/files/posters/)
-- [OpenAPI](openapi/vdocipher-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/vdocipher.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/vdocipher.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-## Common Properties
-
-- [GitHub Organization](https://github.com/VdoCipher)
-- [LinkedIn](https://www.linkedin.com/company/vdocipher)
 - [Website](https://www.vdocipher.com/)
 - [Documentation](https://www.vdocipher.com/docs/server/)
-- [Plans](plans/vdocipher-plans-pricing.yml)
-- [Rate Limits](rate-limits/vdocipher-rate-limits.yml)
-- [Fin Ops](finops/vdocipher-finops.yml)
+- [Blog](https://www.vdocipher.com/blog/feed/)
+- [GitHub](https://github.com/VdoCipher)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 26.7** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 47.8 |
+| Contract governance | 0.0 |
+| Operational transparency | 10.5 |
+| Developer ergonomics | 32.1 |
+| Access clarity | 7.9 |
+
+**Agent readiness 17.9** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 11.8** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/vdocipher/](https://apis.io/providers/vdocipher/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for VdoCipher: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/vdocipher/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
